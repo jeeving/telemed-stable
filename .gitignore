@@ -134,7 +134,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-lib/
 cert.pem
 key.pem
 package-lock.json
+lib/util/telemedReferralFirebase.json
+lib/util/AuthKey_6UB94H992Y.p8
+lib/util/AuthKey_JSZRT2M3B6.p8
