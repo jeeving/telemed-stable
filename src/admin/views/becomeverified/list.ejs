@@ -1,0 +1,124 @@
+<% layout('../layouts/list') -%>
+    
+
+    <div class="row margin">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-left">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript: void(0);">Become Verified</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="page-title-box">
+                <h4 class="page-title">Become Verified list</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card" id="ccd"> 
+                <div class="card-body">
+                    <div id="becomeverified-datatable_filter" class="dataTables_filter" style="text-align: right;">
+                        <label style="font-weight: normal;white-space: nowrap;text-align: left;">
+                            Status:
+                            <select id='searchByStatus' class="form-control form-control-sm" placeholder=""
+                                aria-controls="becomeverified-datatable"
+                                style="margin-left: 0.5em;display: inline-block;width: 200px;">
+                                <option value=''>Select Status</option>
+                                <% for(const index in BecomeVerified){ %>
+                                    <option value="<%= index %>">
+                                        <%= BecomeVerified[index] %>
+                                    </option>
+                                    <% } %>
+                            </select>
+                        </label>
+                    </div>
+
+                    <table class="table nowrap" id="becomeverified-datatable" data-parent="">
+                        <thead>
+                            <tr>
+                                <th>S.No.</th>
+                                <th>User</th>
+                                <th>File</th>
+                                <th>Status</th>
+                                <th>Created </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="row tableLoader">
+                        <div class="col-sm-12 text-center">
+                            <div class="spinner-border avatar-md text-primary m-2" role="status"></div>
+                        </div>
+                    </div>
+                    <div id="dialog" style="display: none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+        <div class="modal fade" id="ImgModal" tabindex="-1" role="dialog" aria-labelledby="ImgModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ImgModalLabel">Image</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" id="imgId" alt="Image" width="100%" />
+                    </div>
+                    <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const setImg = (imgurl) => {
+                $('#imgId').attr('src', imgurl);
+            }
+
+            $('#ccd').on('click', '.displayPdf', function () {
+
+
+
+
+
+                let fileName = $(this).data("url")
+                console.log({fileName})
+                $("#dialog").dialog({
+                    modal: true,
+                    title: fileName,
+                    width: 540,
+                    height: 450,
+                    buttons: {
+                        Close: function () {
+                            $(this).dialog('close');
+                        }
+                    },
+                    open: function () {
+                        var object = "<object data=\"{FileName}\" type=\"application/pdf\" width=\"500px\" height=\"300px\">";
+                        object += "If you are unable to view file, you can download from <a href = \"{FileName}\">here</a>";
+                        object += " or download <a target = \"_blank\" href = \"http://get.adobe.com/reader/\">Adobe PDF Reader</a> to view the file.";
+                        object += "</object>";
+                        object = object.replace(/{FileName}/g, "Files/" + fileName);
+                        $("#dialog").html(object);
+                    }
+                });
+            });
+    
+    
+        </script>

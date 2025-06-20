@@ -1,0 +1,341 @@
+/* css for appointment page  fgfgfhg*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+* {
+    font-family: 'Montserrat';
+}
+
+.background-col {
+    background: #F6F6F6;
+
+}
+
+.colour-white {
+    background-color: white;
+}
+
+#header {
+    position: relative !important;
+    top: 0 !important;
+    padding: 0 0 20px 0;
+}
+
+.header-img-p {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: #252C3B;
+}
+
+/* .dropdown-custom a {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0px 10px;
+    padding-right: 20px;
+}
+
+.dropdown-custom a:after {
+    border: 0px;
+}
+
+.dropdown-custom a[aria-expanded="false"] {
+    border: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath d='M11.9997 13.1714L16.9495 8.22168L18.3637 9.63589L11.9997 15.9999L5.63574 9.63589L7.04996 8.22168L11.9997 13.1714Z' fill='%23000'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: right;
+
+}
+
+.dropdown-custom a[aria-expanded="true"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath d='M11.9997 10.8284L7.04996 15.7782L5.63574 14.364L11.9997 8L18.3637 14.364L16.9495 15.7782L11.9997 10.8284Z' fill='%23000'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: right;
+    border: 0;
+} */
+
+
+
+.header-img i {
+    color: #9BA3B3;
+    font-size: 12px;
+}
+
+.appointment-headline h1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 34px;
+    color: #222222;
+    line-height: 41px;
+}
+
+.subhead1 {
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 400;
+    color: #000000;
+
+}
+
+.subhead2 {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 5px;
+    color: #888888;
+}
+
+.subhead3 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+
+    color: #888888;
+}
+
+.headline {
+    font-family: 'Montserrat';
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 27px;
+    color: #222222;
+    margin-bottom: 10px;
+}
+
+.subhead4 {
+    color: black;
+    font-size: 17px;
+}
+
+.padding-30 {
+    padding-bottom: 30px;
+}
+
+.appointment-content .appointment-date {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #003C75;
+    margin-bottom: 19px;
+
+}
+
+.appointment-content-para {
+    padding-top: 24px;
+}
+
+.appointment-content span {
+    color: #00B7DD;
+    padding: 5px 10px;
+    border: 1px solid #00B7DD;
+    border-radius: 20px;
+    font-size: 16px;
+
+}
+
+.appointment-btn {
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #fefefe;
+    background: #00B7DD;
+    border-radius: 30px;
+    padding: 14px 50px;
+}
+
+.appointment-btn2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    background: #003C75;
+    border-radius: 0px 8px 0px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px
+}
+
+.appointment-btn3 {
+    position: absolute;
+    top: 0;
+    color: white;
+    right: 0;
+    padding: 3px 18px;
+    background: #3DC03A;
+    border-radius: 0px 10px 0px 0px;
+}
+
+.img1 {
+    width: 100%;
+    height: auto;
+}
+
+.appointment-content p {
+    color: #888888;
+}
+
+.status-design {
+    color: #00B7DD;
+}
+
+.payment-details {
+    padding-bottom: 50px;
+}
+
+.payment-details-contant {
+    padding-top: 16px;
+    padding-bottom: 10px;
+}
+
+@media (max-width: 576px) {
+    .content-wrap p {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .subhead1 {
+        margin-bottom: 5px;
+
+    }
+
+    .payment-mobile-media {
+        display: flex;
+        align-items: center;
+
+    }
+
+    .appointment-btn {
+        width: 100%;
+    }
+
+    .subhead3 {
+        width: 50%;
+    }
+
+    .subhead4 {
+        width: 50%;
+        font-size: 15px;
+    }
+
+    .para-style1 {
+        margin: 10px 25px !important;
+    }
+
+    .appointment-btn2 {
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+
+    .appointment-btn3 {
+        padding: 3px 18px;
+        font-size: 13px;
+    }
+}
+
+.appointment-section .user-img {
+
+    border: 2px solid #003C75;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+
+}
+.appointment-section .user-img2 {
+
+  
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+
+}
+
+.client-img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.appointment-wrap {
+    padding: 30px;
+}
+
+.appointment-details-wrap {
+    padding-top: 24px;
+}
+
+.appointment-btn4 {
+    background: #00B7DD;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: white;
+    padding: 11px 20px;
+    border-top-left-radius: 15px;
+
+}
+
+.online-status-label {
+    padding-left: 12px;
+
+}
+
+/* lisiting page mobile view */
+@media (max-width: 576px) {
+    .appointment-btn4 {
+        justify-content: center;
+        position: relative;
+        border-radius: 0;
+    }
+
+    .appointment-wrap {
+        padding: 15px;
+    }
+
+    .headline {
+        padding-top: 20px;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .appointment-headline h1 {
+        font-size: 22px;
+    }
+
+    .appointment-section .user-img {
+        width: 60px;
+        height: 60px;
+    }
+    .appointment-content .appointment-date {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+    .headline-listing{
+        padding: 5px 0px !important;
+    }
+    .appointment-content span{
+        font-size: 12px;
+    }
+}
+
+.headline-listing {
+    margin: 0;
+    padding-bottom: 29px;
+}
+
+.content-page{
+    margin-left: 0;
+}

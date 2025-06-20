@@ -1,0 +1,261 @@
+<% layout('../layouts/admin') -%>
+<div class="row ">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">Dashboard</li>
+                    <li class="breadcrumb-item"><a href="/users">Doctors</a></li>
+                    <li class="breadcrumb-item active">View</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Doctor details</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="form-group mb-3">
+                            <img style="width: 150px; height: 150px; border-radius: 50%;margin-right: 415px;"
+                                 src="<%= user.avatar ? user.avatar.slice(0,4) === 'http' ? user.avatar : `${s3Base}${user.avatar}` : `${siteUrl}/images/user-pic.png` %>"
+                                 alt="<%= user.fullName %>">
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Username: </label> <%= user.userName || 'N/A' %>
+                        </div>
+                    </div> -->
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Fullname: </label> <%= user.fullName || 'N/A' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Email: </label> <%= user.email || 'N/A' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Date of birth: </label> <%= user.dob || 'N/A' %>
+                        </div>
+                    </div>
+                   
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Specialty: </label> <%= user.specality ? user.specality.specialityName : 'N/A' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Reg. no.: </label> <%= user.regNumber || 'N/A' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Contact: </label> <%= user.phone || 'N/A' %>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Whatsapp no.: </label> <%= user.whatsapp || 'N/A' %>
+                        </div>
+                    </div> -->
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Country: </label> <%= user.countries ? user.countries.name : 'N/A' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>State: </label> <%= user.states ? user.states.name : 'N/A' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>City: </label> <%= user.city || 'N/A' %>
+                        </div>
+                    </div> 
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Hospital/Clinic name: </label> <%= user.hospitalName || 'N/A' %>
+                        </div>
+                    </div> 
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Work phone number: </label> <%= user.secondary_phone || 'N/A' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Audio session rate: </label> <%= user.audioSessionRate || 'N/A' %>
+                        </div>
+                    </div>   
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Video session rate: </label> <%= user.videoSessionRate || 'N/A' %>
+                        </div>
+                    </div> 
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Verified: </label> <%- user.isVerified ? '<span class="badge label-table badge-success">Yes</span>' : '<span class="badge label-table badge-secondary">No</span>' %>
+                            &nbsp;
+                            <%
+                            if(typeof user.fileName != 'undefined' && user.fileName != ''){
+                                if(user.fileName.toString().includes('.pdf') == true){
+                                    %>
+                                    <a href="<%= s3Url + user.fileName %>" title="Download" class="text-primary" download> <i class="fas fa-eye"></i> </a>
+                                    <%
+
+                                }
+                                else{
+                                    %>
+                                    <i class="fa fa-eye" style="cursor: pointer;" data-toggle="modal" data-target="#ImgModal"></i>
+                                    <%
+
+                                }
+                            }
+                            %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Status: </label> <%- user.isSuspended ? '<span class="badge label-table badge-secondary">In-active</span>' : '<span class="badge label-table badge-success">Active</span>' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Created at: </label> <%- showDateTimeZone(user.created) %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>About: </label> <%= user.about || '' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Description: </label> <%= user.service || '' %>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Total Earning: </label> <%= user.totalEarning.toFixed(2) || 'N/A' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Wallet Balance: </label> <%= ((user.pending_amount + user.wallettopup_amount) - user.paid_amount).toFixed(2) || 'N/A' %>
+                            &nbsp;&nbsp;
+                            <a onclick="javascript: $('#amount').val('');$('.amount').html('');" class="btn btn-primary btn-xs" href="javascript:void(0);" data-toggle="modal" data-target="#walletModal">Top-Up &plus;</a>
+                            <% if(topupHistoryCount > 0){ %>
+                                &nbsp;&nbsp;
+                                <a class="btn btn-primary btn-xs" href="/transactions?userId=<%= user._id %>">Topup History &nbsp; <i class="fas fa-history"></i></a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.userManager').addClass('active');
+    });
+</script>
+
+<% if(typeof user.isVerified != 'undefined' && user.isVerified == true && typeof user.fileName != 'undefined'){ %>
+<!-- Modal -->
+<div class="modal fade" id="ImgModal" tabindex="-1" role="dialog" aria-labelledby="ImgModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="ImgModalLabel">Image</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <img src="<%= s3Url + user.fileName %>" id="imgId" alt="Image" width="100%" />
+        </div>
+        <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+        </div>
+    </div>
+</div>
+<% } %>
+
+
+<div class="modal fade" id="walletModal" tabindex="-1" role="dialog" aria-labelledby="walletModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="walletModalLabel">Wallet Top-Up</h5>
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button> -->
+        </div>
+        <form method="post" name="topupForm" id="topupForm" action="/users/topup-wallet/<%= user._id %>">
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <div class="form-group mb-3">
+                        <label>Amount <span class="text-danger">*</span></label>
+                        <input type="text" name="amount" id="amount" class="form-control" placeholder="Amount" autocomplete="off" >
+                        <!-- onkeypress="return isNumber(event)" -->
+                        <div class="text-danger amount"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add &plus;</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function() {
+        const TOPUP_WALLET_FORM = <%- JSON.stringify(DM('TOPUP_WALLET_FORM')) %>;
+        $("#topupForm").validate({
+            errorPlacement: function(error, element) {
+                const name = $(element).attr("name");
+                error.appendTo($("." + name));
+            },
+            submitHandler: function(form) {
+                $('#topupForm').attr('disabled', 'disabled');
+                form.submit();
+            },
+            rules: {
+                amount: {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: TOPUP_WALLET_FORM,
+        });
+    });
+
+    // const topupwallet = () => {
+    //     let amount = $('#amount').val();
+    //     alert(amount)
+    // }
+    // onclick="javascript: topupwallet();"
+</script>

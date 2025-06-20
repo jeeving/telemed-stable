@@ -1,0 +1,37 @@
+<div class="row align-items-center justify-content-between">
+	<div class="col col-12 home-about-right static-pages">
+		<h1>Frequently Asked Questions</h1>
+		<div id="faqAccordion" class="accordion">
+			
+			<% faq.forEach((x, i) => { %>
+		    <div class="card">
+		        <div class="card-header" id="heading<%= i %>">
+		            <h2 class="mb-0">
+		                <button
+		                    class="btn btn-link d-flex justify-content-between align-items-center w-100"
+		                    type="button" 
+		                    data-toggle="collapse" 
+		                    data-target="#collapse<%= i %>"
+		                    aria-expanded="<%= i === 0 ? 'true' : 'false' %>" 
+		                    aria-controls="collapse<%= i %>">
+		                    <span class="text-left"><%= x.question %></span>
+		                    <i class="fas fa-chevron-down collapse-icon ml-3"></i>
+		                </button>
+		            </h2>
+		        </div>
+		        <div id="collapse<%= i %>" 
+		             class="collapse <%= i === 0 ? 'show' : '' %>" 
+		             aria-labelledby="heading<%= i %>" 
+		             data-parent="#faqAccordion">
+		            <div class="card-body">
+		                <%= x.answer %>
+		            </div>
+		        </div>
+		    </div>
+		<% }) %>
+
+			
+			
+		</div>
+	</div>
+</div>

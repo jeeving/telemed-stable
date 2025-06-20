@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+</head>
+
+<body class="authentication-bg authentication-bg-pattern">
+   
+
+    
+    
+</body>
+
+</html>
+
+
+<script>
+    
+    window.onload = function() {
+        let url =  "telemedicine://telemedicine/users/share-profile/<%= userId %>?userId=<%= userId %>&screen=profile";
+        window.location = url;
+
+        setTimeout( function(){
+            let userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            
+            if (userAgent.includes("Android")) {
+                window.location.replace("https://play.google.com/store/apps/details?id=com.telemed.referral");
+            } else if (userAgent.includes("iPhone")) {
+                window.location.replace("https://itunes.apple.com/us/app/apple-store/id1611731146?mt=8");
+            } else {
+                window.location.replace("https://www.telemedreferral.com/");
+            }
+        }, 3000);
+    }
+ </script>

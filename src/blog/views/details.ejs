@@ -1,0 +1,69 @@
+<% layout('./layouts/list') -%>
+
+    <!-- blog-section-start -->
+    <section class="blog-sec blog-detail-page">
+        <div class="element"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="blog-detail-slider owl-carousel" id="blog_details">
+                        <li class="item">
+                            <figure>
+                                <div class="blog-detail-img-blog">
+                                    <!-- <img src="/img/blog-detail.png" alt=""> -->
+                                    
+                                    <img src="<%= s3Base %><%= blog.image1 %>" alt="">
+                                </div>
+                            </figure>
+                            
+                        </li>
+                        
+                        
+                        <% if(blog.image2){ %>
+                            <li class="item">
+                                <figure>
+                                    <div class="blog-detail-img-blog">
+                                        <img src="<%= s3Base %><%= blog.image2 %>" alt="">
+                                    </div>
+                                </figure>
+                               
+                            </li>
+                        <% } %>
+
+                        <% if(embedLink){ %>
+                        <li class="item">
+                            <!-- <video controls> -->
+                                <iframe width="930" height="513" src="https://www.youtube.com/embed/<%= embedLink %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                
+                                
+                                
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+            <div class="blog-detail-top-info">
+                <div class="blog-detail-top-box">
+                    <h3>
+                        <%= blog.title %>
+                    </h3>
+                    <span>
+                        
+                        <%= moment.unix(blog.added).format("DD MMMM,YYYY - hh:mm A")  %>
+                    </span>
+                </div>
+                <%- blog.description %>
+            </div>
+            <div class=" d-flex flex-row justify-content-center">
+                <ul class="storeBtn">
+                    <li><a href="https://play.google.com/store/apps/details?id=com.telemed.referral" target="_blank"><img src="/img/google-play.svg" alt="image"></a></li>
+                    <li><a href="https://apps.apple.com/app/telemedreferral/id1611731146" target="_blank"><img src="/img/app-store.svg" alt="image"></a></li>
+                </ul>
+            </div>
+
+        </div>
+        </div>
+        </div>
+    </section>
+    <!-- blog-section-end -->
+

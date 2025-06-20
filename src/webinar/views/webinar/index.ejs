@@ -1,0 +1,30 @@
+<% layout('../layouts/webinar') -%>
+
+
+  <div class="col-xl-12 order-xl-1 order-2">
+    <h1 id="titleHeading">Video Conference</h1>
+    <form>
+      <label for="username" style="display: none;">Name: </label>
+      <input type="text" name="username" id="username" style="display: none;">
+
+      <button id="join_leave">Join call</button>
+      <button id="share_screen" type="button" disabled >Share screen</button>
+      <button id="toggle_chat" type="button" disabled style="display: none;">Toggle chat</button>
+    </form>
+    <p id="count">Disconnected.</p>
+    <div id="root">
+      <div id="container" class="container">
+        <div id="localShare" class="participant" style="display: none;"></div>
+        <div id="local" class="participant">
+          <div>
+            <div class="label" id="meLabel">Me</div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row container" id="otherContainer"></div>
+
+     
+    </div>
+  </div>

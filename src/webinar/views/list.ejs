@@ -1,0 +1,162 @@
+<% layout('layouts/admin') -%>
+
+    <div class="row margin">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-left">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);"><strong>Dashboard</strong></a></li>
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+    </div>
+   
+    <!-- <%= token %> -->
+    <div class="col-xl-12 order-xl-1 order-2">
+        <div class="appointment-headline  headline-listing pt-4">
+            <h1>Active CME Appointments</h1>
+        </div>
+        
+        <% if(webinars.length>0){ %>
+            <% webinars.forEach( (webinar)=>{ %>
+                <a href="/webinar/cme-details/<%= webinar._id %>" style="color: #222222;" >
+                <section class="appointment-section" style="margin-bottom: 20px;">
+                
+                    <div class="colour-white p-0" style="padding: 0px 30px;border-radius: 10px; position: relative;">
+                        <!-- <button type="button" class="btn appointment-btn2">As Presentor & Host</button> -->
+                        <label for="appointment-status" class="appointment-btn2">
+                            <% if(webinar.members.isPresenter && webinar.members.isHost ){ %>
+                                As Presenter & Host
+                                <% }else{ %>
+                                    As Presenter
+                                    <% } %>
+                        </label>
+                        <div class="appointment-wrap">
+                            <div class="appointment-content ">
+                                <h4 class="headline">
+                                    <%= webinar.title %>
+                                </h4>
+                                <p class="appointment-date">
+                                    <%= webinar.dateWebinar %>
+                                        <%= webinar.timeWebinar.start %> - <%= webinar.timeWebinar.end %>
+                                </p>
+                                <% if( webinar.accredited ){ %><span>Accredited</span>
+                                    <% } %>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="col d-flex align-items-center appointment-details-wrap">
+                                        
+                                            <% if(webinar.members.avatar){ %>
+                                                <img src="<%= s3Base+webinar.members.avatar %>" class="rounded-circle user-img " alt="">
+                                                <% }else{ %>
+                                                    <img src="/images/userimg2.png" class="rounded-circle user-img " alt="">
+                                                    <% } %>
+                                        
+                                        <div class="content-wrap" style="padding-top: 10px;padding-left: 20px;">
+                                            <p class="subhead1">Dr. <%= webinar.members.fullName %> (Presenter) </p>
+                                            <p class="subhead2">
+                                                <%= webinar.members.specality %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="appointment-btn4 d-flex" style="cursor: pointer;">
+                
+                            <% if(webinar.isEnd){ %>
+                                <img src="/images/Vector.png" alt="">
+                                <label for="online-status" class="m-0 online-status-label">Completed</label>
+                
+                                <% }else{ %>
+                
+                                    
+                                        <img src="/images/Vector.png" alt="">
+                                        <label for="online-status" class="m-0 online-status-label"
+                                            style="color: white;cursor: pointer;">
+                                            Online CME
+                                        </label>
+                                        <!-- <a href="/webinar/start?vdr=<%= webinar._id %>&identity=<%= token %>"></a> -->
+                
+                                    <% } %>
+                
+                
+                        </div>
+                
+                    </div>
+                </section>
+            </a>
+                <!-- <div class="card-box mb-2">
+                    <div class="row align-items-center">
+                        <div class="col-sm-4">
+                            <div class="media">
+                               
+                                <div class="media-body">
+                                    <h4 class="mt-0 mb-2 font-16"><%= webinar.title %>  </h4>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="text-center my-3 my-sm-0">
+                                <p class="mb-0 text-muted"> <%= webinar.dateWebinar %> <%= webinar.timeWebinar.start %></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="text-center button-list"> 
+
+                                <div class="container">
+                                  <div class="row">
+                                    <div class="col-sm">
+                                        <% if(webinar.isEnd){ %>
+                                            <a href="javascript:void(0);" class="btn btn-xs btn-danger waves-effect waves-light">Completed</a>
+                                            
+                                        <% }else{ %>
+                                            <a href="/webinar/start?vdr=<%= webinar._id %>&identity=<%= token %>" class="btn btn-xs btn-primary waves-effect waves-light">Start</a>
+                                        <% } %>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-url="<%= share %><%= webinar._id %>" data-a2a-title="<%= shareText %>">
+                                          <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                                          <a class="a2a_button_facebook"></a>
+                                          <a class="a2a_button_twitter"></a>
+                                          <a class="a2a_button_email"></a>
+                                        </div>
+                                    </div>
+                                    
+                                  </div>
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        
+                    </div> 
+                </div> -->
+                <% }) %>
+
+
+
+
+                    <% }else{ %>
+                        <div class="card-box mb-2">
+                            No matching records found
+
+                        </div> <!-- end card-box-->
+                        <% } %>
+
+
+
+
+    </div> <!-- end col -->
+
+
+
+
+
+    <script async src="https://static.addtoany.com/menu/page.js"></script>

@@ -1,0 +1,69 @@
+﻿<% layout('layouts/admin') -%>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">
+                Dashboard
+            </h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-xl-4">
+        <a href="/users">
+            <div class="widget-rounded-circle card-box">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="fas fa-user-md font-22 avatar-title text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="text-right">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup"><%= userCount%></span></h3>
+                            <p class="text-muted mb-1 text-truncate">Total Doctors/Consultants</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-xl-4">
+        <a href="/appointments">
+            <div class="widget-rounded-circle card-box">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="fas fa-calendar-alt font-22 avatar-title text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="text-right">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup"><%= completed%></span></h3>
+                            <p class="text-muted mb-1 text-truncate">Total Appointments Completed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+     </div>
+     <div class="col-md-6 col-xl-4">
+        <a href="/appointments">
+            <div class="widget-rounded-circle card-box">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="fas fa-calendar-times font-22 avatar-title text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="text-right">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup"><%= cancelled%></span></h3>
+                            <p class="text-muted mb-1 text-truncate">Total Appointments Cancelled</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

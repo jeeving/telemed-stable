@@ -1,0 +1,340 @@
+<% layout('../layouts/admin') -%>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/appointments">Appointments</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">View</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">View</h4>
+        </div>
+    </div> -->
+</div>
+<div class="row">
+
+    <!-- ---------------------DOCTOR DETAILS---------------------->
+
+    <div class="col-6">
+        <div class="page-title-box">
+            <h4 class="page-title">Doctor Details</h4>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Fullname : </label> <%= shareAppData.doctor.fullName ? shareAppData.doctor.fullName : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Phone number : </label> <%= shareAppData.doctor && shareAppData.doctor.phone ? shareAppData.doctor.phone : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Email : </label> <%= shareAppData.doctor && shareAppData.doctor.email ? shareAppData.doctor.email : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Specialty : </label> <%= shareAppData.doctor.specality && shareAppData.doctor.specality.specialityName ? shareAppData.doctor.specality.specialityName : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Reg. number : </label> <%= shareAppData.doctor && shareAppData.doctor.regNumber ? shareAppData.doctor.regNumber : 'NA' %>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Experience : </label> <%= shareAppData.doctor.experience ? shareAppData.doctor.experience : 'NA' %><%= ' Year'%>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ---------------------Consultant DETAILS---------------------->
+
+    <div class="col-6">
+        <div class="page-title-box">
+            <h4 class="page-title">Consultant Details</h4>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Fullname : </label> <%= shareAppData.consultant && shareAppData.consultant.fullName ? shareAppData.consultant.fullName : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Phone number : </label> <%= shareAppData.consultant && shareAppData.consultant.phone ? shareAppData.consultant.phone : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Email : </label> <%= shareAppData.consultant && shareAppData.consultant.email ? shareAppData.consultant.email : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Specialty : </label> <%= shareAppData.consultant && shareAppData.consultant.specality && shareAppData.consultant.specality.specialityName ? shareAppData.consultant.specality.specialityName : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Reg. number : </label> <%= shareAppData.consultant && shareAppData.consultant.regNumber ? shareAppData.consultant.regNumber : 'NA' %>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Experience : </label> <%= shareAppData.consultant.experience ? shareAppData.consultant.experience : 'NA' %><%= ' Year'%>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ---------------------BOOKING DETAILS---------------------->
+
+    <div class="col-6">
+        <div class="page-title-box">
+            <h4 class="page-title">Booking Details</h4>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Date : </label> <%= moment(shareAppData.bookingDetails.date ? shareAppData.bookingDetails.date : 'NA').format('D MMMM YYYY') %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Mode : </label> <%= shareAppData.bookingDetails.mode ? shareAppData.bookingDetails.mode : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Amount Received : </label> 
+                            <!-- <%= shareAppData.bookingDetails.totalPayable ? (shareAppData.bookingDetails.totalPayable/100).toFixed(2) : 'NA' %> -->
+                            <%= shareAppData.bookingDetails.totalPayable 
+                            ? (shareAppData.appointmentId > 501 
+                                ? (shareAppData.bookingDetails.totalPayable / 100).toFixed(2) 
+                                : shareAppData.bookingDetails.totalPayable.toFixed(2)) 
+                            : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Time : </label> <% if(shareAppData.bookingDetails.slots.length > 0) { %>
+                                <%
+                                    let start = shareAppData.bookingDetails.slots
+                                %>  
+                                <%=
+                                    moment(showDateTimeZone(start[0].utcTime).substr(11), "hh:mm: A").format('LT') %> <%= '-' %> <%= moment(showDateTimeZone(start[start.length - 1].utcTime).substr(11), "hh:mm: A").add(15, 'minutes').format('LT')
+                                %>  
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ---------------------PATIENT DETAILS---------------------->
+
+    <div class="col-6">
+        <div class="page-title-box">
+            <h4 class="page-title">Patient Details</h4>
+        </div>
+        <div class="card">
+            <div class="card-body"> 
+                <div class="row">
+                   <!--   -->
+
+                    <!-- <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Dob : </label> <%= showDate(shareAppData.patient.dob ? shareAppData.patient.dob : 'NA') %>
+                        </div>
+                    </div> -->
+
+                        <div class="col-lg-12">
+                            <div class="form-group mb-3">
+                                <label>Age : </label> <%= shareAppData.patient.age ? shareAppData.patient.age : 'NA' %>
+                            </div>
+                        </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Gender : </label> <%= shareAppData.patient.gender ? shareAppData.patient.gender : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Reason : </label> <%= shareAppData.patient.reason ? shareAppData.patient.reason : 'NA' %>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- --------------------DOCUMENTS DETAILS---------------------->
+<!-- .length > 0 || shareAppData.patient.prescriptions.length > 0) -->
+
+<!-- <% if( (shareAppData.patient.documents.length > 0 && shareAppData.patient.documents[0].documentName) || (shareAppData.patient.prescriptions.length > 0 && shareAppData.patient.prescriptions[0].documentName) ) { %>
+<div class="col-6">
+    <div class="page-title-box">
+        <h4 class="page-title">Reports & Prescriptions</h4>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <% if(shareAppData.patient.documents.length > 0) { %>
+                <div class="col-lg-12">
+                        <label>Reports : </label> 
+                            <div class="form-group mb-3 ">
+                                <table class="table">
+                                    <tr>    
+                                        <th>Filename</th><th>Document</th>
+                                    </tr>
+                                        <%
+                                            let presc = shareAppData.patient.documents
+                                            presc.forEach(doc => {
+                                        %> 
+                                        <% if(doc.documentName) { %>
+                                        <tr>
+                                        <td><%= doc.fileName %></td>
+                                        <td> <button id="submitEditPageForm" type="submit" onclick="window.open('<%= prviewUrl%>'+'<%= doc.documentName %>')" class="btn btn-warning waves-effect waves-light">open</button> </td>
+                                        </tr>
+                                        <% } %>    
+                                    <% } ) %>
+                                    </table>
+                            </div>
+                </div>
+                <% } %>
+
+                <% if(shareAppData.patient.prescriptions.length > 0 && shareAppData.patient.prescriptions[0].documentName != '') { %>
+                <div class="col-lg-12">
+                    <label>Prescriptions : </label> 
+                        <div class="form-group mb-3 ">
+                            <table class="table">
+                                <tr>
+                                    <th>Filename</th><th>Document</th>
+                                </tr>
+                                    <%
+                                        let docs = shareAppData.patient.prescriptions
+                                        docs.forEach(doc => {
+                                    %> 
+                                    <% if(doc.documentName) { %>
+                                    <tr>
+                                    <td><%= doc.fileName %></td>
+                                    <td> <button id="submitEditPageForm" type="submit" onclick="window.open('<%= prviewUrl%>'+'<%= doc.documentName %>')" class="btn btn-warning waves-effect waves-light">open</button> </td>
+                                    </tr> 
+                                    <% } %> 
+                                <% } ) %>
+                                </table>
+                        </div>
+                </div>
+                <% } %>
+        </div>
+    </div>
+</div>
+</div>
+<% } %> -->
+
+<% if( shareAppData.payment   && shareAppData.paymentDetails  ) { %>
+<div class="col-6">
+    <div class="page-title-box">
+        <h4 class="page-title">Payment Details </h4>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                            <div class="form-group mb-3 ">
+                                <table class="tablesaw table mb-0 tablesaw-stack tablesaw-sortable">
+                                    <tr>    
+                                    </tr>
+                                    <tr>
+                                        <td>RazorPay Transaction Id:</td>
+                                            <td><%= shareAppData.paymentDetails.id %> </td>
+                                        </tr>
+                                        <td>Payment status:</td>
+                                        <td><%= shareAppData.paymentDetails.status %> </td>
+                                        </tr>
+                                        <tr>
+                                        <td>Amount:</td>
+                                        <td><%= shareAppData.bookingDetails.totalPayable %> <%= shareAppData.paymentDetails.currency || '' %></td>
+                                        </tr>
+                                        <tr>
+                                        <td>Payment method:</td>
+                                        <td> <%= shareAppData.paymentDetails.method %></td>
+                                        </tr>
+                                        <% if(shareAppData.paymentDetails.bank){ %>
+                                        <tr>
+                                            <td> Bank:</td>
+                                            <td> <%= shareAppData.paymentDetails.bank %></td>
+                                        </tr>
+                                        <tr>
+                                            <td> Bank Transaction id:</td>
+                                            <td> <%= shareAppData.paymentDetails.acquirer_data.bank_transaction_id %></td>
+                                        </tr>
+                                        <% } %>
+                                        <% if(shareAppData.paymentDetails.vpa){ %>
+                                        <tr>
+                                            <td>UPI ID:</td>
+                                            <td> <%= shareAppData.paymentDetails.vpa %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>UPI transaction id:</td>
+                                            <td> <%= shareAppData.paymentDetails.acquirer_data.upi_transaction_id %></td>
+                                        </tr>
+                                        <%}%>
+                                        <tr>
+                                            <td>Created At:</td>
+                                            <td> <%- showDateTimeZone(shareAppData.paymentDetails.created_at * 1000) %></td>
+                                        </tr>
+                                        <% if(shareAppData.paymentDetails.refund_status){ %>
+                                        <tr>
+                                            <td>Refund Status:</td>
+                                            <td> <%= shareAppData.paymentDetails.refund_status %></td>
+                                        </tr>
+                                        <tr>
+                                            <td> Amount Refunded:</td>
+                                            <td> <%= shareAppData.paymentDetails.amount_refunded /100 %> <%= shareAppData.paymentDetails.currency || '' %></td>
+                                        </tr>
+                                        <%}%>
+
+                                        <% if(shareAppData.paymentDetails.card_id){ %>
+                                        <tr>
+                                            <td> Transaction id:</td>
+                                            <td> <%= shareAppData.paymentDetails.acquirer_data.auth_code  %></td>
+                                        </tr>
+                                        <%}%>
+                                    </table>
+                            </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+<% } %>
+
+<script>
+    $(document).ready(function(){
+        $('.appointmentsManager').addClass('active');
+    });
+</script>

@@ -1,0 +1,57 @@
+<% layout('../layouts/list') -%>
+<style>
+.text-wrap{
+    white-space:normal;
+}
+.width-200{
+    width:200px;
+}
+</style>
+<div class="row margin">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">Appointments</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Appointment Call list</h4>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 text-right">
+    <div class="form-group mb-3 text-right">
+    </div>
+  </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                 
+                <table class="table nowrap table-sm" id="appointments-twilio-datatable" data-aid="<%= id %>"  >
+                    <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Appointment ID</th>
+                        <th>Status</th>
+                        <th>Twilio SID</th>
+                        <th>Date</th>
+                        <th>Duration (sec)</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="row tableLoader">
+                    <div class="col-sm-12 text-center">
+                        <div class="spinner-border avatar-md text-primary m-2" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

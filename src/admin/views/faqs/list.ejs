@@ -1,0 +1,49 @@
+<% layout('../layouts/list') -%>
+<div class="row margin">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">FAQ</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">FAQ list</h4>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 text-right">
+    <div class="form-group mb-3 text-right">
+      <a type="submit" class="btn btn-primary waves-effect waves-light"  href="/faqs/add">Add FAQ</a>
+    </div>
+  </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table nowrap" id="faq-datatable" data-parent="">
+                    <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Question</th>
+                        <th>Answer</th>
+                        <th>Status</th>
+                        <th>Created </th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="row tableLoader">
+                    <div class="col-sm-12 text-center">
+                        <div class="spinner-border avatar-md text-primary m-2" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

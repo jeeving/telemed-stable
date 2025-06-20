@@ -1,0 +1,298 @@
+<% layout('../layouts/admin') -%>
+
+<style>
+    .remove-image {
+        display: block;
+        position: absolute;
+        top: -10px;
+        right: 25px;
+        border-radius: 10em;
+        padding: 0px 3px 0px;
+        text-decoration: none;
+        font: 700 21px/20px sans-serif;
+        background: #555;
+        border: 3px solid #fff;
+        color: #FFF;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        -webkit-transition: background 0.5s;
+        transition: background 0.5s;
+}
+.remove-image:hover {
+        background: #E54E4E;
+        padding: 3px 7px 3px;
+        top: -10px;
+        right: 25px;
+}
+.remove-image:active {
+        background: #E54E4E;
+        top: -10px;
+        right: 25px;
+}
+input[type='file'] {
+  color: transparent;    /* Hides your "No File Selected" */
+}
+
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/blogs">Blogs</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">Edit</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Edit Blog</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" id="editAdvertisementForm">
+                    <div class="row">
+                        
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Title <span class="text-danger">*</span></label>
+                                <input type="text" name="title" id="title" class="form-control" value="<%= blog.title %>"
+                                       autocomplete="off" >
+                                <div class="text-danger title"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group mb-3">
+                                <label>Description <span class="text-danger"></span></label>
+                                <textarea name="description" id="description"  class="description summernote" autocomplete="off"><%= blog.description %></textarea>
+                                <div class="text-danger summernoteErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Image Ist<span class="text-danger">* (5 MB Max)</span></label>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <input type="file" name="image1" onchange="uploadImage(1)" id="image1" class="form-control"
+                                            autocomplete="off">
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <input type="hidden" value="<%= blog.image1 || '' %>" id="sImage1" name="sImage1">
+                                    </div>
+                        
+
+                                    
+
+                                    <div class="col-sm-3" style="text-align: center;">
+                                        <img class="loading loading1" src="<%= siteUrl %>/loading.gif" alt="processing" style="display: none;">
+                                        <% if( blog.image1 ){ %>
+                                            <img src="<%= s3Base+blog.image1 %>"  width="80" height="80" id="preview1" class='preview'>
+                                        <% }else{ %>
+                                            <img src=""  width="80" height="80" id="preview1" class='preview' style="display: none;">
+                                        <% } %>
+                                        
+
+                                        <button type="button" class="remove-image preview1" id="pseudoCancel1x" onclick="cancelImage(1)" >×</button>
+
+                                        <!-- <button class="remove-image preview1" id="pseudoCancel1" onclick="cancelImage(1)" >×</button> -->
+                                        
+                                    </div>
+                        
+                                </div>
+                                <div class="text-danger image1"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Image IInd <span class="text-danger"> (5 MB Max)</span></label>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <input type="file" name="image2" onchange="uploadImage(2)" id="image2" class="form-control"
+                                            autocomplete="off">
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <input type="hidden" value="<%= blog.image2 || '' %>" id="sImage2" name="sImage2">
+                                    </div>
+                        
+                                    <div class="col-sm-3" style="text-align: center;">
+                                        <img class="loading loading2" src="<%= siteUrl %>/loading.gif" alt="processing" style="display: none;">
+                                        
+                                        <% if( blog.image2 ){ %>
+                                            <img src="<%= s3Base+blog.image2 %>"  width="80" height="80" id="preview2" class='preview'>
+                                        <% }else{ %>
+                                            <img src=""  width="80" height="80" id="preview2" class='preview' style="display: none;">
+                                        <% } %>
+
+                                        <button type="button" class="remove-image preview2" id="pseudoCancel2" onclick="cancelImage(2)">x</button>
+                                    </div>
+                        
+                                </div>
+                                <div class="text-danger image2"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group mb-3">
+                                <label>Video (youtube) <span class="text-danger"></span></label>
+                                <input type="text" name="video" id="video" class="form-control" value="<%= blog.video || "" %>""
+                                       autocomplete="off" >
+                                <div class="text-danger video"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12 text-left">
+                            <div class="form-group mb-3 text-left">
+                                <button id="editAdvertisementForm" type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        // Define the regular expression for a valid YouTube URL
+        
+        $.validator.addMethod("validYoutubeUrl", function(value) {
+            if( !value ){
+                return true
+            }
+            const youtubeRegex = /^(https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)/i;
+            if (!youtubeRegex.test(value)) {
+                return false;
+            }
+            return true;
+        }, "Please enter a valid YouTube URL.");
+
+        $.validator.addMethod("validDescription", function(value) {
+            console.log({value})
+            //const youtubeRegex = /^(https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)/i;
+            //if (!youtubeRegex.test(value)) {
+                return false;
+            //}
+            return true;
+        }, "This field is required");
+
+        
+        $("#blogForm").validate({
+            errorPlacement: function(error, element) {
+                const name = $(element).attr("name");
+                error.appendTo($("." + name));
+                if ($('.summernote').summernote('isEmpty')) {
+                    $('.summernoteErr').html('<label><%= DM("DESCRIPTION_REQUIRED") %></label>');
+                }
+            },
+            submitHandler: function(form) {
+                if ($('.summernote').summernote('isEmpty')) {
+                    $('.summernoteErr').html('<label><%= DM("DESCRIPTION_REQUIRED") %></label>');
+                }
+                else {
+                    $('#blogForm').attr('disabled', 'disabled');
+                    form.submit();
+                }
+            },
+            rules: {
+                title: {
+                    required: true
+                },
+                description: {
+                    required: true,
+                    //validDescription: true
+                },
+                image1 : {
+                    required: true,
+                },
+                image2 : {
+                    required: false,
+                },
+                video : {
+                    validYoutubeUrl:true
+                },
+
+            },
+        });
+        
+    });
+</script>
+
+<script type="text/javascript">
+
+    function readURL(input,num) {
+        if (input) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $(`#preview${num}`).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input);
+        }
+    }
+
+    function cancelImage( num ) {
+        $(`#sImage${num}`).val(null);
+        $(`#preview${num}`).hide();
+        $(`#preview${num}`).attr("src",null);
+    }
+
+    function uploadImage( num ){
+        let imgs =  $(`#image${num}`)
+        $(`#preview${num}`).hide();
+        readURL( imgs[0].files[0],num );
+
+        if( (imgs[0].files[0].size/1024) > 5000 )
+        {
+            $(`.image1${num}`).html('Blog Image must be 5MB maximum.');
+        }
+        else{
+            $(`.image1${num}`).text("");
+            $(`.loading${num}`).show();
+            $(':input[type="submit"]').prop('disabled', true);
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: '/blogs/uploadImage',
+            data: {
+                location: 'blogs/',
+                count: 1,
+                type: 'IMAGE'
+            },
+            success: function (imageData) {
+                let image = $(`#image${num}`).get()[0].files[0];
+                let url = imageData.data[0].url.replace("http:", "https:")
+                $.ajax({
+                    type: 'PUT',
+                    url,
+                    contentType: 'image/jpeg',
+                    processData: false,
+                    data: image,
+                    success: function(res) {
+                        let index = imageData.data[0].preview.lastIndexOf('/');
+                        let result = imageData.data[0].preview.substring(index + 1);
+                        result = `blogs/${result}`;
+                        $(`#sImage${num}`).val(result);
+                        $(`.loading${num}`).hide();
+                        $(`#preview${num}`).show(); // Display image element
+                        $(`.preview${num}`).show(); // Display image element
+                        $(':input[type="submit"]').prop('disabled', false);
+                    },
+                    error: function(error) {
+                        console.log( "errrr=====>", error);
+                    }
+                });
+            }
+        });
+    }
+</script>

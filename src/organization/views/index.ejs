@@ -1,0 +1,71 @@
+﻿<% layout('layouts/admin') -%>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">
+                Dashboard
+            </h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-xl-4">
+        <a href="/users">
+            <div class="widget-rounded-circle card-box">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="fas fa-user-md font-22 avatar-title text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="text-right">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup"><%= organization.numAccount %></span></h3>
+                            <p class="text-muted mb-1 text-truncate">User Limit</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-xl-4">
+        <a href="/users">
+            <div class="widget-rounded-circle card-box">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="fas fa-calendar-alt font-22 avatar-title text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="text-right">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup"><%= users.length  %></span></h3>
+                            <p class="text-muted mb-1 text-truncate">Total Users</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+     </div>
+     <div class="col-md-6 col-xl-4">
+        <a href="javascript:void(0);">
+            <div class="widget-rounded-circle card-box">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="fas fa-calendar-times font-22 avatar-title text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="text-right">
+                            <h3 class="text-dark mt-1">
+                                <span data-plugin="c1ounterup"><%= organization.tenureDate %></span>
+                            </h3>
+                            <p class="text-muted mb-1 text-truncate">Account Expiration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

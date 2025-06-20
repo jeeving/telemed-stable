@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title><%= siteTitle %></title>
+    <script>
+        const siteUrl = "<%= siteUrl %>/webinar/"
+      </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/logo.png">
+    <link href="/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css">
+    <link href="/libs/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/icons.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/app.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/app.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="wrapper">
+    <% include ../layouts/partials/topBar %>
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <% if (errorFlash || successFlash || infoFlash) { %>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top: 15px">
+                            <% if (errorFlash){ %>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <%= errorFlash %>
+                                </div>
+                            <% } if (successFlash){ %>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <%= successFlash %>
+                                </div>
+                                <% } if (infoFlash){ %>
+                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <%= infoFlash %>
+                                    </div>
+                                <% } %>
+                        </div>
+                    </div>
+                <% } %>
+                <div class="row" style="display: none;">
+                    <div class="col-md-12" style="margin-top: 15px">
+                        <div class="apiMessage"></div>
+                    </div>
+                </div>
+                <%- body %> 
+            </div>
+        </div>
+        <% include ../layouts/partials/footer %>
+    </div>
+</div>
+<script src="/js/vendor.min.js"></script>
+
+
+<script>
+    window.wtp = window.wtp || {};
+    window.wtp.s3Base = '<%= s3Base %>';
+</script>
+</body>
+</html>

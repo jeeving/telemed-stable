@@ -1,0 +1,139 @@
+<% layout('../layouts/admin') -%>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/users">Doctors</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">Edit</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Edit Doctor Details</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" id="editDoctorForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Full Name <span class="text-danger">*</span></label>
+                                <input type="text" name="fullName" class="form-control" value="<%= userFetch.fullName ? userFetch.fullName : '' %>" placeholder="Full Name"
+                                       autocomplete="off">
+                                <div class="text-danger fullName"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Email <span class="text-danger">*</span></label>
+                                <input type="email" name="email" class="form-control" value="<%= userFetch.email ? userFetch.email : '' %>" placeholder="Email"
+                                       autocomplete="off">
+                                <div class="text-danger email"></div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Country Code <span class="text-danger">*</span></label>
+                                <input type="text" name="countryCode" class="form-control"
+                                       placeholder="Country Code" autocomplete="off">
+                                <div class="text-danger countryCode"></div>
+                            </div>
+                        </div> -->
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Phone Number <span class="text-danger">*</span></label>
+                                <input type="text" name="phoneNumber" value="<%= userFetch.phone ? userFetch.phone : '' %>" class="form-control"
+                                       placeholder="Phone Number" autocomplete="off">
+                                <div class="text-danger phoneNumber"></div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Password <span class="text-danger">*</span></label>
+                                <input type="password" name="password" id="password" class="form-control" placeholder="Password"
+                                       autocomplete="off">
+                                <div class="text-danger password"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Confirm Password <span class="text-danger">*</span></label>
+                                <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm Password"
+                                       autocomplete="off">
+                                <div class="text-danger confirmPassword"></div>
+                            </div>
+                        </div> -->
+                        <div class="col-lg-12 text-left">
+                            <div class="form-group mb-3 text-left">
+                                <button id="editDoctorForm" type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        const EDIT_DOCTOR_FORM = <%- JSON.stringify(DM('EDIT_DOCTOR_FORM')) %>;
+        $("#editDoctorForm").validate({
+            errorPlacement: function(error, element) {
+                const name = $(element).attr("name");
+                error.appendTo($("." + name));
+            },
+            submitHandler: function(form) {
+                $('#editDoctorForm').attr('disabled', 'disabled');
+                form.submit();
+            },
+            rules: {
+                fullName: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 30,
+                },
+                email: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 80,
+                    pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    remote: {
+                        url: "/is-email-exists",
+                        type: "post",
+                        data: {
+                            id: () => '<%= currentUser._id %>'
+                        }
+                    }
+                },
+                // countryCode: {
+                //     required: true,
+                //     pattern: /^\+(?:[0-9] ?)[\d]{0,2}$/
+                // },
+                phoneNumber: {
+                    required: true,
+                    pattern: /^\+(?:[0-9] ?){6,12}[0-9]$/
+                },
+                // password:{
+                //     required: true,
+                //     pattern: /^(?=.*?[A-Z])(?=(.*[a-z])+)(?=(.*[\d])+)(?=(.*[\W])+)(?!.*\s).{8,}$/
+                // },
+                // confirmPassword:{
+                //     required: true,
+                //     equalTo: '#password'
+                // },
+            },
+            messages: EDIT_DOCTOR_FORM,
+        });
+        $('.userManager').addClass('active');
+    });
+</script>

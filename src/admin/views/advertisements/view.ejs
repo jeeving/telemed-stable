@@ -1,0 +1,68 @@
+<% layout('../layouts/admin') -%>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/advertisements">Advertisement</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">View</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">View</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Banner Image: </label>
+                            <div class="tab-content pt-0">
+                                <div class="col-sm-6 col-xl-3 filter-item all web illustrator" id="product-1-item">
+                                    <img  src="<%= advertise.bannerImage ? advertise.bannerImage.slice(0,4) === 'http' ? advertise.bannerImage : `${prviewUrl}${advertise.bannerImage}` : `${siteUrl}/images/thumbnail-post.jpg` %>"
+                                     alt="bannerImage" class="img-fluid mx-auto d-block rounded">
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Advertise Name: </label> <%= advertise.advertiseName ? advertise.advertiseName : '' %>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Banner Url: </label> <%= advertise.bannerUrl ? advertise.bannerUrl : '' %>
+                        </div>
+                    </div>
+                   
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Created at: </label> <%= showDateTimeZone(advertise.created ? advertise.created : '') %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Status: </label> <%- advertise.isSuspended ? '<span class="badge label-table badge-secondary">In-Active</span>' : '<span class="badge label-table badge-success">Active</span>' %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.advertisementPages').addClass('active');
+    });
+</script>

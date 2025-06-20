@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        <%= siteTitle %>
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<%= siteUrl %>/bootstrap-v3/bootstrap.min.css">
+    <link rel="stylesheet" href="<%= siteUrl %>/sweetalert2/sweetalert2.min.css">
+    <script src="<%= siteUrl %>/bootstrap-v3/jquery.min.js"></script>
+    <script src="<%= siteUrl %>/bootstrap-v3/bootstrap.min.js"></script>
+    <script src="<%= siteUrl %>/sweetalert2/sweetalert2.min.js"></script>
+    <style>
+        .content {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 10%);
+        }
+    </style>
+    <noscript>Please enable javascript</noscript>
+</head>
+
+<body class="bg-white">  
+    <div class="container-fluid">
+        <div class="row">
+            <% if(command==='holdCharge' ) { %>
+                <div class="col-12 col-xs-12 col-sm-8 col-md-10 col-lg-8 col-xl-8 content">
+                    <div class="col-sm-10 col-md-8 col-lg-5 ">
+                        <div class="card">
+                            <h5 class="card-header">Confirm Order</h5>
+
+                            <div class="card-body">
+                                <p class="card-text">Thank you for joining us.</p>
+
+                                <dl class="row mt-2">
+                                    <dt class="col-sm-3">Order ID</dt>
+                                    <dd class="col-sm-9" id="orderId">
+                                        <%- orderId %>
+                                    </dd>
+
+                                    <dt class="col-sm-3">Currency</dt>
+                                    <dd class="col-sm-9">
+                                        <%- currency %>
+                                    </dd>
+
+                                    <dt class="col-sm-3">Amount</dt>
+                                    <dd class="col-sm-9">
+                                        <%- amount/100 %> <%- currency %>
+                                    </dd>
+
+                                    <% if(currency == "INR") {%>
+                                        <dt class="col-sm-3">GST</dt>
+                                        <dd class="col-sm-9">
+                                            <%- gst/100 %> <%- currency %>
+                                        </dd>
+                                    <% } %>
+
+                                    <% if(walletAmount && walletAmount>0){ %>
+                                    <dt class="col-sm-3">Wallet Amount</dt>
+                                    <dd class="col-sm-9">
+                                        <%- walletAmount %> <%- currency %>
+                                    </dd>
+                                    <% } %>
+
+                                    
+
+
+                                    <dt class="col-sm-3">Total payable</dt>
+                                    <dd class="col-sm-9">
+                                        <%- payableAmount/100 %> <%- currency %>
+                                    </dd>
+                                </dl>
+
+                                <% if( payableAmount>0 ){ %>
+                                    <button type="submit" id="pay" class="btn btn-primary" onclick="checkout(event)">Checkout</button>
+                                <% }else{  %>
+                                    <button type="submit" id="pay" class="btn btn-primary" onclick="walletCheckout(event)">Checkout</button>
+                                <% } %>
+                                
+
+                            </div>
+                        </div>
+                        <form id="paymentVerifyForm" action="/webinar/webinar/verify" method="POST">
+                            <input name="razorpay_payment_id" type="hidden" id="razorpay_payment_id" />
+                            <input name="razorpay_order_id" type="hidden" id="razorpay_order_id" />
+                            <input name="razorpay_signature" type="hidden" id="razorpay_signature" />
+                            <input name="razorpay_webinarId" type="hidden" id="razorpay_webinarId" />
+                        </form>
+                    </div>
+                </div>
+
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                <script>
+                    function walletCheckout( event ){
+                        const orderId = '<%- JSON.stringify(orderId) %>'
+                        const webinarId = '<%- JSON.stringify(webinarId) %>'
+                        const customerId = '<%- JSON.stringify(customerId) %>'
+                        const currency = '<%- JSON.stringify(currency) %>'
+                        const amount = '<%- JSON.stringify(payableAmount) %>'
+                        window.location.replace(`/webinar/webinar/success?name=<%= webinarId %>&allWallet=yes`)
+                    }
+                    function checkout(event) {
+                        const orderId = '<%- JSON.stringify(orderId) %>'
+                        const webinarId = '<%- JSON.stringify(webinarId) %>'
+                        const customerId = '<%- JSON.stringify(customerId) %>'
+                        const currency = '<%- JSON.stringify(currency) %>'
+                        const amount = '<%- JSON.stringify(payableAmount) %>'
+                        console.log('--webinarId--', webinarId ,orderId, customerId, currency, amount)
+                        const options = {
+                            "key": '<%- publicKey %>',
+                            "amount": '<%- amount %>',
+                            "currency": "<%- currency %>",
+                            "name": "TelemedReferral",
+                            "description": "Transaction",
+                            "image": "<%- siteUrl %>/logo.png",
+                            "order_id": JSON.parse(orderId),
+                            'customer_id': '<%- customerId %>',
+                            "save": 1,
+                            "handler": function (response) {
+                                console.log('-----------------------response---------', response)
+                                document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+                                document.getElementById('razorpay_order_id').value = response.razorpay_order_id;
+                                document.getElementById('razorpay_signature').value = response.razorpay_signature;
+                                document.getElementById('razorpay_webinarId').value = JSON.parse(webinarId);
+                                document.getElementById("paymentVerifyForm").submit();
+                            },
+                            "prefill": {
+                                "name": "<%- name %>",
+                                "email": "<%- email %>",
+                                "contact": '<%- contact.split(" ").filter(s => s).join("") %>',
+                            },
+                            "modal": {
+                                ondismiss: function () {
+                                    alert(`Payment Failed`)
+                                }
+                            },
+                            "theme": {
+                                "color": "#22527b"
+                            },
+                            callback_url: `<%- siteUrl %>/webinar/webinar/verify/<%- payableAmount/100 %>`,
+                            redirect: true,
+                            retry:{
+                                enabled:true,
+                                max_count:3
+                            }
+                        };
+                        console.log("options", JSON.stringify(options))
+                        //return
+                        const razorpay = new Razorpay(options);
+                        razorpay.open();
+                        event.preventDefault();
+                    }
+                   /*  setTimeout(() => {
+                        document.getElementById("pay").click();
+                    }, 1500); */
+
+                </script>
+                <% } %>
+        </div>
+    </div>
+    <script>
+        $(document).ready(() => {
+            const command = '<%= command %>';
+            const successTitle = '<%= successTitle %>';
+            const successMsg = '<%= successMsg %>';
+            const errorCodeTitle = '<%= errorCodeTitle %>';
+            const errorCode = '<%= errorCode %>';
+            const errorTitle = '<%= errorTitle %>';
+            const errMsg = '<%= errMsg %>';
+
+            if (command === 'showErrorMessage') {
+                Swal.fire({
+                    title: errorTitle,
+                    html: `<p>${errMsg}</p><br><span style='font-size:12px'>${errorCodeTitle} ${errorCode}</span>`,
+                    type: 'error',
+                    showCloseButton: false,
+                    focusConfirm: false,
+                });
+            }
+            if (command === 'showSuccessMessage') {
+                Swal.fire({
+                    title: successTitle,
+                    text: successMsg,
+                    type: 'success',
+                    showCloseButton: false,
+                    focusConfirm: false,
+                });
+            }
+            $('.swal2-confirm').on('click', (e) => {
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+
+</html>

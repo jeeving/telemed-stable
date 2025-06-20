@@ -1,0 +1,61 @@
+<% layout('../layouts/list') -%>
+<div class="row margin">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">State</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">State list</h4>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 text-right">
+    <div class="form-group mb-3 text-right">
+      <a type="submit" class="btn btn-primary waves-effect waves-light"  href="/state/add">Add State</a>
+    </div>
+  </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div id="states-datatable_filter" class="dataTables_filter" style="text-align: right;">
+                    <label style="font-weight: normal;white-space: nowrap;text-align: left;">
+                        Country:  
+                        <select id='searchByCountry' class="form-control form-control-sm" placeholder="" aria-controls="state-datatable" style="margin-left: 0.5em;display: inline-block;width: 200px;">
+                            <option value=''>Select Country</option> 
+                            <% countryList.map(country => { %>
+                                <option value="<%= country._id %>"><%= country.name %></option>
+                            <% }) %>
+                        </select>
+                    </label>
+                </div>
+
+                <table class="table nowrap" id="state-datatable" data-parent="">
+                    <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Country</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Created </th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="row tableLoader">
+                    <div class="col-sm-12 text-center">
+                        <div class="spinner-border avatar-md text-primary m-2" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

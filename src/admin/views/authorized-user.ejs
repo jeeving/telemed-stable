@@ -1,0 +1,45 @@
+<% layout('layouts/notAuthorized') -%>
+<div class="text-center w-75 m-auto">
+  <a>
+    <span><img src="<%= siteUrl %>/logo.png" alt="<%= siteTitle %>" style="height: 60px; width: auto"></span>
+  </a>
+  <p class="text-muted mb-4 mt-3"></p>
+</div>
+<form id="UserVerifyOtp" action="/auth/verify-user" method="post">
+  <input type="hidden" name="email" value="<%= email %>" />
+  <div class="form-group">
+    <label class="label">OTP<span style="color: red !important;">*</span></label>
+    <input type="number" class="form-control" placeholder="OTP" name="otp" autocomplete="off">
+    <div class="text-danger otp"></div>
+  </div>
+
+  <div class="form-group mb-0 text-center">
+    <input id="timeZone" type="hidden" name="timeZone">
+    <button type="submit" id="submitUserVerifyOtp" class="btn btn-primary submit-btn btn-block">Submit</button>
+  </div>
+
+</form>
+
+<script>
+  $(document).ready(function() {
+    $('#timeZone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    const ADMIN_RESET_PASSWORD_FORM = <%- JSON.stringify(DM('ADMIN_RESET_PASSWORD_FORM')) %>;
+    $("#UserVerifyOtp").validate({
+      errorPlacement: function(error, element) {
+        const name = $(element).attr("name");
+        error.appendTo($("." + name));
+      },
+      submitHandler: function(form) {
+        $('#submitUserVerifyOtp').attr('disabled', 'disabled');
+        form.submit();
+      },
+      rules: {
+        otp: {
+          required: true,
+          number: true,
+          digit: true,
+        },
+      },
+    });
+  })
+</script>

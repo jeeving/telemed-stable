@@ -1,0 +1,55 @@
+<% layout('../layouts/admin') -%>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/country">Country</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">View</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">View</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Name: </label> <%= rec.name %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Currency: </label> <%= rec.currency %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Created at: </label> <%= showDateTimeZone(rec.created) %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Status: </label> <%- rec.isSuspended ? '<span class="badge label-table badge-secondary">In-Active</span>' : '<span class="badge label-table badge-success">Active</span>' %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.countryManager').addClass('active');
+    });
+</script>

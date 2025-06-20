@@ -1,0 +1,130 @@
+<% layout('../layouts/admin') -%>
+
+<style>
+    .remove-image {
+        display: none;
+        position: absolute;
+        top: -10px;
+        right: 25px;
+        border-radius: 10em;
+        padding: 0px 3px 0px;
+        text-decoration: none;
+        font: 700 21px/20px sans-serif;
+        background: #555;
+        border: 3px solid #fff;
+        color: #FFF;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        -webkit-transition: background 0.5s;
+        transition: background 0.5s;
+}
+.remove-image:hover {
+        background: #E54E4E;
+        padding: 3px 7px 3px;
+        top: -10px;
+        right: 25px;
+}
+.remove-image:active {
+        background: #E54E4E;
+        top: -10px;
+        right: 25px;
+}
+input[type='file'] {
+  color: transparent;    /* Hides your "No File Selected" */
+}
+
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/state">State</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">Add</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Add State</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" id="addStateForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Country <span class="text-danger">*</span></label>
+                                <select name="countryId" id="countryId" class="form-control" autocomplete="off">
+                                    <option value="">Select Country</option>
+                                    <% countryList.map(country => { %>
+                                        <option value="<%= country._id %>"><%= country.name %></option>
+                                    <% }) %>
+                                </select>
+                                <div class="text-danger countryId"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" -->
+                                <label>Name <span class="text-danger">*</span></label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Name"
+                                       autocomplete="off" >
+                                <div class="text-danger name"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 text-left">
+                            <div class="form-group mb-3 text-left">
+                                <button id="addStateForm" type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        const ADD_STATE_FORM = <%- JSON.stringify(DM('ADD_STATE_FORM')) %>;
+        $("#addStateForm").validate({
+            errorPlacement: function(error, element) {
+                const name = $(element).attr("name");
+                error.appendTo($("." + name));
+            },
+            submitHandler: function(form) {
+                $('#addStateForm').attr('disabled', 'disabled');
+                form.submit();
+            },
+            rules: {
+                countryId: {
+                    required: true
+                },
+                name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 80,
+                    remote: {
+                        url: "/state/is-state-exists",
+                        type: "post",
+                        data: {
+                            key: 'name',
+                            value: () => $('#name').val()
+                        }
+                    }
+                }
+            },
+            messages: ADD_STATE_FORM,
+        });
+        $('.stateManager').addClass('active');
+    });
+</script>

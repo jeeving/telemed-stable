@@ -1,0 +1,57 @@
+<% layout('../layouts/admin') -%>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/payments">Payment</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">View</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">View</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <!-- ---------------------PATIENT DETAILS---------------------->
+
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Name : </label> <%= shareAppData.patient.fullName ? shareAppData.patient.fullName : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Age : </label> <%= shareAppData.patient.age ? shareAppData.patient.age : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Gender : </label> <%= shareAppData.patient.gender ? shareAppData.patient.gender : 'NA' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Reason : </label> <%= shareAppData.patient.reason ? shareAppData.patient.reason : 'NA' %>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.paymentsManager').addClass('active');
+    });
+</script>

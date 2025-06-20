@@ -1,0 +1,210 @@
+<% layout('../layouts/admin') -%>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/organizations/list">Organization</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">Edit</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Edit Organization</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" id="addForm">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Organization Name <span class="text-danger">*</span></label>
+                                <input type="text" name="name" id="name" value="<%= organization.name %>" class="form-control" placeholder="Organization Name" autocomplete="off" >
+                                <div class="text-danger name"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Required Account <span class="text-danger">*</span></label>
+                                <input type="text" name="numAccount" id="numAccount" value="<%= organization.numAccount %>" class="form-control" placeholder="Required Account" autocomplete="off" >
+                                <div class="text-danger numAccount"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Email <span class="text-danger">*</span></label>
+                                <input type="text" name="email" id="email" value="<%= organization.email %>" class="form-control" placeholder="Organization Email" autocomplete="off" >
+                                <div class="text-danger email"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Country code <span class="text-danger">*</span></label>
+                                <input type="text" name="countryCode" class="form-control"
+                                       placeholder="Country code" autocomplete="off"
+                                       value="<%= organization.countryCode %>">
+                                <div class="text-danger countryCode"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Phone <span class="text-danger">*</span></label>
+                                <input type="text" name="phone" id="phone" value="<%= organization.phone %>" class="form-control" placeholder="Phone" autocomplete="off" >
+                                <div class="text-danger phone"></div>
+                            </div>
+                        </div>
+
+
+                        <!-- <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Plan End Date <span class="text-danger">*</span></label>
+                                <input type="text" id="tenureDate" name="tenureDate" class="form-control flatpickr-input" value="<%= organization.tenureDate %>" placeholder="Plan End Date" readonly="readonly">
+                                <div class="text-danger tenureDate"></div>
+                            </div>
+                        </div> -->
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Password <span class="text-danger">(Leave blank if you don't want to change password)</span></label>
+                                <input type="password" name="password" id="password" class="form-control" placeholder="Password" autocomplete="new-password" >
+                                <div class="text-danger password"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group mb-3">
+                                <label>Remarks <span class="text-danger"></span></label>
+                                <textarea name="remarks" id="remarks" class="form-control"><%= organization.remarks || "" %></textarea>
+                                <div class="text-danger remarks"></div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-lg-12 text-left">
+                            <div class="form-group mb-3 text-left">
+                                <button id="addFaqForm" type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $.validator.addMethod("phoneUS", function (phone_number, element) {
+            phone_number = phone_number.replace(/\s+/g, "");
+            return this.optional(element) || phone_number.length > 9 && phone_number.match(/^(\+?1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
+        }, "Please specify a valid phone number");
+
+        let phoneNumberPattern = /^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/;
+
+        $.validator.addMethod(
+            "isdCodePattern",
+            function (value, element) {
+            // Regular expression pattern for ISD code (allowing 1-4 digits)
+            let pattern = /^(\+?)?\d{1,4}$/;
+            return this.optional(element) || pattern.test(value);
+            },
+            "Please enter a valid country code."
+        );
+
+        // Add the custom validation method for phone numbers
+        $.validator.addMethod("phoneIndia", function(phoneNumber, element) {
+            return this.optional(element) || phoneNumberPattern.test(phoneNumber);
+        }, "Please enter a valid phone number");
+
+        $.validator.addMethod("eightTo15Digits", function(value, element) {
+          return this.optional(element) || /^\+?\d{8,15}$/.test(value);
+        }, "Please enter a number between 8 and 15 digits.");
+        
+        $("#addForm").validate({
+            errorPlacement: function(error, element) {
+                const name = $(element).attr("name");
+                error.appendTo($("." + name));
+            },
+            submitHandler: function(form) {
+                $('#addForm').attr('disabled', 'disabled');
+                form.submit();
+            },
+            rules: {
+                name: {
+                    required: true,
+                },
+                numAccount : {
+                    required: true,
+                    min: 0,
+                    max: 5000
+                },
+                email : {
+                    required: true,
+                    email: true,
+                    remote: {
+                        url: "/organizations/chk-email",
+                        type: "post",
+                        data: {
+                            key: 'email',
+                            value: () => $('#email').val(),
+                            "_id":"<%= organization._id %>"
+                        }
+                    }
+                },
+                countryCode: {
+                    required: true,isdCodePattern:true
+                },
+                phone : {
+                    required: true,
+                    eightTo15Digits:true
+                },
+                /*tenureDate : {
+                    required: true,
+                },*/
+                
+            },
+            messages: {
+                email: {
+                    "remote": "Email is already exists"
+                }
+            }
+        });
+
+
+        !(function (i) {
+            "use strict";
+            var e = function () {};
+            (e.prototype.init = function () {
+                i("#tenureDate").flatpickr({ 
+                    minDate: new Date(),
+                    enableTime: 0, 
+                    dateFormat: "Y-m-d" 
+                });
+            }),
+                (i.FormPickers = new e()),
+                (i.FormPickers.Constructor = e);
+        })(window.jQuery),
+            (function (e) {
+                "use strict";
+                window.jQuery.FormPickers.init();
+            })();
+
+        
+    });
+
+
+    
+</script>

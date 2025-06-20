@@ -1,0 +1,237 @@
+<% layout('../layouts/admin') -%>
+
+<style>
+    .remove-image {
+        display: block;
+        position: absolute;
+        top: -10px;
+        right: 15px;
+        border-radius: 10em;
+        padding: 0px 3px 0px;
+        text-decoration: none;
+        font: 700 21px/20px sans-serif;
+        background: #555;
+        border: 3px solid #fff;
+        color: #FFF;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        -webkit-transition: background 0.5s;
+        transition: background 0.5s;
+}
+.remove-image:hover {
+        background: #E54E4E;
+        padding: 3px 7px 3px;
+        top: -10px;
+        right: 15px;
+}
+.remove-image:active {
+        background: #E54E4E;
+        top: -10px;
+        right: 15px;
+}
+input[type='file'] {
+  color: transparent;    /* Hides your "No File Selected" */
+}
+
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/social_links">Social Links</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">Edit</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Edit Social Links</h4>
+            <p style="display: none;" id="splId"><%= link._id %></p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" id="editSocialLinkForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Name <span class="text-danger">*</span></label>
+                                <input type="text" name="socialName" id="socialName" value="<%= link.socialName ? link.socialName : ''%>" class="form-control" placeholder="Social platform name"
+                                       autocomplete="off" >
+                                <div class="text-danger socialName"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Link Url <span class="text-danger">*</span></label>
+                                <input type="text" name="linkUrl" value="<%= link.linkUrl ? link.linkUrl : ''%>" id="linkUrl" class="form-control"
+                                       autocomplete="off" >
+                                <div class="text-danger linkUrl"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Social Icon <span class="text-danger">* (5 MB Max)</span></label>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <input type="file" name="socialIcon" onchange = "uploadImage()"  id="socialIcon" class="form-control"
+                                            autocomplete="off" >
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <input type="hidden" id="s3Image" name="s3Image">
+                                    </div>
+
+                                    <div class="col-sm-3" style="text-align: center;">
+                                        <img class="loading" src="<%= siteUrl %>/loading.gif" alt="processing" style="display: none;">
+                                        <img src="<%= prviewUrl%><%= link.socialIcon ? link.socialIcon : '' %>" id="img" width="80" height="80" class='preview' style="display: block;">
+                                        <button class="remove-image preview" id="pseudoCancel" onclick = "cancelImage()">&#215;</button>
+                                    </div>
+                                
+                                </div>
+                                <div class="text-danger socialIcon"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12 text-left">
+                            <div class="form-group mb-3 text-left">
+                                <button id="editSocialLinkForm" type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        const ADD_SOCIAL_LINK_FORM = <%- JSON.stringify(DM('ADD_SOCIAL_LINK_FORM')) %>;
+        $("#editSocialLinkForm").validate({
+            errorPlacement: function(error, element) {
+                const name = $(element).attr("name");
+                error.appendTo($("." + name));
+            },
+            submitHandler: function(form) {
+                $('#editSocialLinkForm').attr('disabled', 'disabled');
+                form.submit();
+            },
+            rules: {
+                socialName: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 80,
+                    remote: {
+                        url: "/social_links/is-link-exists",
+                        type: "post",
+                        data: {
+                            key: 'socialName',
+                            value: () => $('#socialName').val(),
+                            id : () => $('#splId').html(),
+                            type : 'edit'
+                        }
+                    }
+                },
+                linkUrl : {
+                    required: true,
+                    url: true
+                },
+                socialIcon : {
+                    required: true
+                }
+            },
+
+            messages: ADD_SOCIAL_LINK_FORM,
+        });
+        $('.socialLinksManager').addClass('active');
+    });
+</script>
+
+
+<script type="text/javascript">
+
+    function readURL(input) {
+        if (input) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#img').attr('src', e.target.result);
+                // $(".preview").show(); // Display image element
+                
+               var imgSrc = $('#img').attr('src')
+            }
+            reader.readAsDataURL(input);
+        }
+    }
+    
+function cancelImage() {
+            $("#socialIcon").val(null);
+            $(".preview").hide();
+            $("#img").attr("src",null);
+            $("#s3Image").val(null);
+            $('.socialIcon').text("");  
+        }
+    
+    
+    function uploadImage()
+        {
+            var imgs =  $("#socialIcon");
+            $(".preview").hide();
+            readURL(imgs[0].files[0]);
+
+    if((imgs[0].files[0].size/1024) > 5000)
+        {
+            $('.socialIcon').html('Social icon must be 5MB maximum.');
+        }
+        else{
+            $('.socialIcon').text("");
+            $('.loading').show();
+            $(':input[type="submit"]').prop('disabled', true);
+        }
+        
+        // return false;   
+            $.ajax({
+                type: 'GET',
+                url: '/social_links/socialLinks/uploadImage',
+                data: {
+                    location: '/socialIcons/',
+                    count: 1,
+                    type: 'IMAGE'
+                },
+                success: function (imageData) {
+                    var image = $('#socialIcon').get()[0].files[0];
+
+                    $.ajax({
+                        type: 'PUT',
+                        url: imageData.data[0].url,
+                        contentType: imgs[0].files[0].type,
+                        processData: false,
+                        data: image,
+                        success: function(res) {
+                            var index = imageData.data[0].preview.lastIndexOf('/');
+                            var result = imageData.data[0].preview.substring(index + 1);
+                            console.log("result",result);
+                            $('#s3Image').val(result)
+                            $('.loading').hide();
+                            $(".preview").show(); // Display image element
+                            $(':input[type="submit"]').prop('disabled', false);
+                        },
+                        error: function(error) {
+                            console.log( error);
+                        }
+            });
+    }
+    
+            });
+        }
+    </script>
+
+

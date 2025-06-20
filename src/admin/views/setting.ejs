@@ -1,0 +1,271 @@
+<% layout('layouts/admin') -%>
+
+<div class="row margin">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">Dashboard</li>
+                    <li class="breadcrumb-item active">
+                        <a href="javascript: void(0);">Settings</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Settings</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="settingsForm" method="post">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Android app version <span
+                                            class="text-danger">*</span></label>
+                                <input type="text" name="androidAppVersion"
+                                       value="<%= settingData.androidAppVersion || '' %>" class="form-control"
+                                       placeholder="Android app version" autocomplete="off">
+                                <div class="text-danger androidAppVersion"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Android app force update<span
+                                            class="text-danger">*</span></label>
+                                <select class="form-control" name="androidForceUpdate" autocomplete="off">
+                                    <option <%= settingData.androidForceUpdate ? 'selected="selected"' : '' %> value=true>
+                                        Enable
+                                    </option>
+                                    <option <%= !settingData.androidForceUpdate ? 'selected="selected"' : '' %>
+                                            value=false>
+                                        Disable
+                                    </option>
+                                </select>
+                                <div class="text-danger androidForceUpdate"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>iOS app version <span class="text-danger">*</span></label>
+                                <input type="text" name="iosAppVersion" value="<%= settingData.iosAppVersion || '' %>"
+                                       class="form-control" placeholder="iOS app version" autocomplete="off">
+                                <div class="text-danger iosAppVersion"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>iOS app force update <span
+                                            class="text-danger">*</span></label>
+                                <select class="form-control" name="iosForceUpdate" autocomplete="off">
+                                    <option <%= settingData.iosForceUpdate ? 'selected="selected"' : '' %> value=true>
+                                        Enable
+                                    </option>
+                                    <option <%= !settingData.iosForceUpdate ? 'selected="selected"' : '' %> value=false>
+                                        Disable
+                                    </option>
+                                </select>
+                                <div class="text-danger iosForceUpdate"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Maintenance <span class="text-danger">*</span></label>
+                                <select class="form-control" name="maintenance" autocomplete="off">
+                                    <option <%= settingData.maintenance ? 'selected="selected"' : '' %> value=true>Enable
+                                    </option>
+                                    <option <%= !settingData.maintenance ? 'selected="selected"' : '' %> value=false>
+                                        Disable
+                                    </option>
+                                </select>
+                                <div class="text-danger maintenance"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Transaction Fee( % ) <span class="text-danger">*</span></label>
+                                <input type="text" name="adminCommission" value="<%= settingData.adminCommission || '' %>"
+                                       class="form-control" placeholder="Admin Commission" autocomplete="off">
+                                <div class="text-danger adminCommission"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 pl-0">
+                            <h4>Transaction Fees</h4>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>GST(%) <span class="text-danger">*</span></label>
+                                <input type="text" name="gst" value="<%= settingData.gst || 0 %>"
+                                       class="form-control" placeholder="GST" autocomplete="off">
+                                <div class="text-danger gst"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" style="display: none;">
+                            <div class="form-group mb-3">
+                                <label>Transaction Fee <span class="text-danger">*</span></label>
+                                <input type="text" name="transactionFee" value="<%= settingData.transactionFee || 0 %>"
+                                       class="form-control" placeholder="transactionFee" autocomplete="off">
+                                <div class="text-danger transactionFee"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Admin Commission(Flat Fee) <span class="text-danger">*</span></label>
+                                <input type="text" name="adminFlatFee" value="<%= settingData.adminFlatFee || '' %>"
+                                       class="form-control" placeholder="Admin Commission" autocomplete="off">
+                                <div class="text-danger adminFlatFee"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>NewsLetter Email  <span class="text-danger">*</span></label>
+                                <input type="text" name="newsLetterEmail" value="<%= settingData.newsLetterEmail || '' %>"
+                                       class="form-control" placeholder="newsLetterEmail" autocomplete="off">
+                                <div class="text-danger newsLetterEmail"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Webinar Price  <span class="text-danger">*</span></label>
+                                <input type="text" name="webinarPrice" value="<%= settingData.webinarPrice || '' %>"
+                                       class="form-control" placeholder="webinarPrice" autocomplete="off">
+                                <div class="text-danger webinarPrice"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Webinar Gst(%)  <span class="text-danger">*</span></label>
+                                <input type="text" name="webinarGst" value="<%= settingData.webinarGst || '' %>"
+                                       class="form-control" placeholder="webinarGst" autocomplete="off">
+                                <div class="text-danger webinarGst"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Conversion Rate  <span class="text-danger">*</span></label>
+                                <input type="text" name="conversionRate" value="<%= settingData.conversionRate || '' %>"
+                                       class="form-control" placeholder="Conversion Rate" autocomplete="off">
+                                <div class="text-danger conversionRate"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Audio Call Rate  <span class="text-danger">*</span></label>
+                                <input type="text" name="audioCallFee" value="<%= settingData.audioCallFee || '' %>"
+                                       class="form-control" placeholder="Audio Rate" autocomplete="off">
+                                <div class="text-danger audioCallFee"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Video Call Rate  <span class="text-danger">*</span></label>
+                                <input type="text" name="videoCallFee" value="<%= settingData.videoCallFee || '' %>"
+                                       class="form-control" placeholder="Video Rate" autocomplete="off">
+                                <div class="text-danger videoCallFee"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12 text-right">
+                            <div class="form-group mb-3 text-right">
+                                <button id="submitSettingsForm" type="submit"
+                                        class="btn btn-primary waves-effect waves-light">Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        const ADMIN_SETTINGS_FORM = <%- JSON.stringify(DM('ADMIN_SETTINGS_FORM')) %>;
+        $('#settingsForm').validate({
+            errorPlacement: function(error, element) {
+                const name = $(element).attr('name');
+                error.appendTo($('.' + name));
+            },
+            submitHandler: function(form) {
+                $('#submitSettingsForm').attr('disabled', 'disabled');
+                form.submit();
+            },
+            rules: {
+                androidAppVersion: {
+                    required: true,
+                    pattern: /^[\d]+\.[\d]+\.[\d]+$/,
+                },
+                adminCommission:{
+                    required: true,
+                    pattern: /^[1-9]\d*(\.\d+)?$/,
+                },
+                iosAppVersion: {
+                    required: true,
+                    pattern: /^[\d]+\.[\d]+\.[\d]+$/,
+                },
+                androidForceUpdate: {
+                    required: true,
+                },
+                iosForceUpdate: {
+                    required: true,
+                },
+                gst:{
+                    required: true,
+                    number: true
+                },
+                webinarGst: {
+                    required: true,
+                    number: true
+                },
+                adminFlatFee: {
+                    required: true,
+                    number: true
+                },
+                transactionFee:{
+                    required: true,
+                    number: true
+                },
+                maintenance: {
+                    required: true,
+                },
+                webinarPrice: {
+                    required: true,
+                    number: true,
+                    min: 1
+                },
+                conversionRate: {
+                    required: true,
+                    number: true,
+                    min: 1
+                },
+
+                audioCallFee: {
+                    required: true,
+                    number: true
+                },
+                videoCallFee: {
+                    required: true,
+                    number: true
+                },
+
+
+            },
+            messages: ADMIN_SETTINGS_FORM,
+        });
+    });
+</script>

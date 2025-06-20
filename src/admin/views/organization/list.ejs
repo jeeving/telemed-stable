@@ -1,0 +1,286 @@
+<% layout('../layouts/list') -%>
+    <div class="row marginLess25">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-left">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">Dashboard</li>
+                        <li class="breadcrumb-item active"><a href="javascript: void(0);">Organization</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="page-title-box">
+                <h4 class="page-title">Organization</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table nowrap" id="request-datatable">
+                        <thead>
+                            <tr>
+                                <th>S.NO.</th>
+                                <th>Name</th>
+                                <th>Accounts</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>End Date</th>
+                                <th>Current Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% organizations.forEach( (x,i)=>{ %>
+                                <tr>
+                                    <td>
+                                        <%= i+1 %>
+                                    </td>
+                                    <td>
+                                        <%= x.name %>
+                                    </td>
+                                    <td>
+                                        <%= x.numAccount %>
+                                    </td>
+                                    <td>
+                                        <%= x.email %>
+                                    </td>
+                                    <td>
+                                        <%= x.phone %>
+                                    </td>
+                                    <td>
+                                        <%= moment(x.tenureDate).format("YYYY-MM-DD") %>
+                                    </td>
+                                    <td>
+                                        <a href="/organizations/payment-history/<%= x._id %>" title="Payment History" >
+                                            ₹<%= x.lastAmountReceived||0 %>
+                                        </a>
+                                        
+                                    </td>
+                                    <td>
+                                        <% if(x.isSuspended){ %>
+                                            <span class="badge badge-danger">In-Active</span>
+                                            <% }else{ %>
+                                                <span class="badge badge-success">Active</span>
+                                                <% } %>
+
+
+                                    </td>
+                                    <td>
+                                        <a data-user="<%= JSON.stringify(x)  %>" title="Update Plan"
+                                            class="addTimeAmount" href="javascript:void(0);" data-toggle="modal"
+                                            data-target="#con-close-modal"> <i class=" fas fa-rupee-sign"></i> </a>
+                                        
+                                            <% if(x.isSuspended){ %>
+                                                <a data-url="/organizations/status/<%= x._id %>" title="Active"
+                                                    class="changeR" href="javascript:void(0);"> <i class="fas fa-check"></i> </a>
+                                                <% }else{ %>
+                                                    <a data-url="/organizations/status/<%= x._id %>" title="In-Active"
+                                                        class="changeR" href="javascript:void(0);"> <i class="fas fa-ban"></i> </a>
+                                                    <% } %>
+
+                                            
+
+
+                                        <a href="/organizations/edit/<%= x._id %>" title="Edit"> <i
+                                                class="fas fa-edit"></i> </a>
+                                        <a data-url="/organizations/delete/<%= x._id %>" title="Remove" class="deleteR"
+                                            href="javascript:void(0);"> <i class="fas fa-trash"></i> </a>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                    <!-- <div class="row tableLoader">
+                    <div class="col-sm-12 text-center">
+                        <div class="spinner-border avatar-md text-primary m-2" role="status"></div>
+                    </div>
+                </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"> <span id="ogName"></span> </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <form method="post" id="addForm">
+                    <div class="modal-body p-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="newAmount" class="control-label">Amount</label>
+                                    <input type="text" class="form-control" id="newAmount" name="newAmount"
+                                        placeholder="Amount">
+                                    <div class="text-danger newAmount"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="newEndDate" class="control-label">End Date</label>
+                                    <input type="text" readonly class="form-control" id="newEndDate" name="newEndDate"
+                                        placeholder="">
+                                    <div class="text-danger newEndDate"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"><input type="hidden" name="organizationId" id="organizationId" value=""></div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-info waves-effect waves-light submitFrm">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+
+
+    <script>
+        $(document).ready(function () {
+            
+
+            $(".deleteR").click(function () { 
+                const { url } = $(this).data();
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    type: 'warning',
+                    showCancelButton: !0,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes!'
+                }).then(function (t) {
+                    t.value && (window.location.href = url);
+                });
+
+            })
+
+            $(".changeR").click(function () {
+                const { url } = $(this).data();
+                Swal.fire({
+                    title: 'Are you sure?',
+                    type: 'warning',
+                    showCancelButton: !0,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes!'
+                }).then(function (t) {
+                    t.value && (window.location.href = url);
+                });
+
+            })
+
+            $(".addTimeAmount").click(function () {
+                let { user } = $(this).data();
+                console.log(user)
+                let {
+                    _id, name, tenureDate,
+                } = JSON.parse(JSON.stringify(user));
+
+                $("#ogName").html(name)
+                $("#organizationId").val(_id)
+                $("#newAmount").val()
+                $("#newEndDate").val(tenureDate)
+
+            })
+
+            //$(".submitFrm").click( u )
+
+            $("#addForm").validate({
+                errorPlacement: function (error, element) {
+                    const name = $(element).attr("name");
+                    error.appendTo($("." + name));
+                },
+                rules: {
+                    newAmount: {
+                        required: true,
+                        number: true
+                    },
+                    newEndDate: {
+                        required: true,
+                    },
+                    
+
+                },
+                submitHandler: function (form) {
+                    $('#addForm').attr('disabled', 'disabled');
+                    //form.submit();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/organizations/amount-add',
+                        data: $("#addForm").serialize(),
+                        success: function (data) {
+
+                            Swal.fire({
+                                title: 'Date extended successfully',
+                                type: 'success',
+                                showCancelButton: 0,
+                                confirmButtonColor: '#3085d6',
+                                //cancelButtonColor: '#d33',
+                                //confirmButtonText: 'Yes!'
+                            }).then(function (t) {
+                                window.location.reload()
+                            });
+
+                        },
+                        rules: {
+                            newAmount: {
+                                required: true,
+                                number: true,
+                                min: 0,
+                                max: 500000
+                            },
+
+                            tenureDate: {
+                                required: true,
+                            },
+
+                        },
+                        messages: {
+                            email: {
+                                "remote": "Email is already exists"
+                            }
+                        }
+                    });
+
+
+                }
+            })
+
+            !(function (i) {
+                "use strict";
+                var e = function () { };
+                (e.prototype.init = function () {
+                    i("#newEndDate").flatpickr({
+                        minDate: new Date(),
+                        enableTime: 0,
+                        dateFormat: "Y-m-d"
+                    });
+                }),
+                    (i.FormPickers = new e()),
+                    (i.FormPickers.Constructor = e);
+            })(window.jQuery),
+                (function (e) {
+                    "use strict";
+                    window.jQuery.FormPickers.init();
+                })();
+
+                $("#request-datatable").DataTable()
+
+
+        })
+
+
+
+    </script>

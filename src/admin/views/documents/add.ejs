@@ -1,0 +1,267 @@
+<% layout('../layouts/admin') -%>
+
+<style>
+    .remove-image {
+        display: none;
+        position: absolute;
+        top: -10px;
+        right: 25px;
+        border-radius: 10em;
+        padding: 0px 3px 0px;
+        text-decoration: none;
+        font: 700 21px/20px sans-serif;
+        background: #555;
+        border: 3px solid #fff;
+        color: #FFF;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        -webkit-transition: background 0.5s;
+        transition: background 0.5s;
+    }
+    .remove-image:hover {
+        background: #E54E4E;
+        padding: 3px 7px 3px;
+        top: -10px;
+        right: 25px;
+    }
+    .remove-image:active {
+        background: #E54E4E;
+        top: -10px;
+        right: 25px;
+    }
+    input[type='file'] {
+        color: transparent;    /* Hides your "No File Selected" */
+    }
+
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/documents">Documents</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">Add</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Add Document</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" id="docForm" >
+                    <div class="row">
+                        
+                        <div class="col-lg-12">
+                            <div class="form-group mb-3">
+                                <label>File<span class="text-danger">* (10 MB Max)</span></label>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <input type="file" name="image1" onchange="uploadImage(1)" id="image1" class="form-control"
+                                            autocomplete="off">
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <input type="hidden" id="sImage1" name="sImage1">
+                                        <input type="hidden" id="sType1" name="sType1">
+                                        <input type="hidden" id="sContentType1" name="sContentType1">
+                                    </div>
+                        
+
+                                    
+
+                                    <div class="col-sm-3" style="text-align: center;">
+                                        <img class="loading loading1" src="<%= siteUrl %>/loading.gif" alt="processing" style="display: none;">
+                                        
+                                        <!-- <img src=""  width="80" height="80" id="preview1" class='preview' style="display: none;"> -->
+
+                                        <span id="preview1" style="display: none;" >
+
+                                        </span>
+
+
+                                        <button type="button" class="remove-image preview1" id="pseudoCancel1x" onclick="cancelImage(1)" >×</button>
+
+                                        <!-- <button class="remove-image preview1" id="pseudoCancel1" onclick="cancelImage(1)" >×</button> -->
+                                        
+                                    </div>
+                        
+                                </div>
+                                <div class="text-danger image1"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group mb-3">
+                                <label>Name <span class="text-danger">*</span></label>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <input type="text" name="title" id="title" class="form-control" autocomplete="off" >
+                                        <div class="text-danger title"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-lg-12 text-left">
+                            <div class="form-group mb-3 text-left">
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        // Define the regular expression for a valid YouTube URL
+        
+        $.validator.addMethod("validYoutubeUrl", function(value) {
+            if( !value ){
+                return true
+            }
+            const youtubeRegex = /^(https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)/i;
+            if (!youtubeRegex.test(value)) {
+                return false;
+            }
+            return true;
+        }, "Please enter a valid YouTube URL.");
+
+        $.validator.addMethod("validDescription", function(value) {
+            console.log({value})
+            //const youtubeRegex = /^(https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)/i;
+            //if (!youtubeRegex.test(value)) {
+                return false;
+            //}
+            return true;
+        }, "This field is required");
+
+        
+        $("#docForm").validate({
+            errorPlacement: function(error, element) {
+                const name = $(element).attr("name");
+                error.appendTo($("." + name));
+                
+            },
+            submitHandler: function(form) {
+                    $('#docForm').attr('disabled', 'disabled');
+                    form.submit();
+                
+            },
+            rules: {
+                title: {
+                    required: true
+                },
+                image1 : {
+                    required: true,
+                },
+            },
+        });
+        
+    });
+</script>
+
+<script type="text/javascript">
+
+    function readURL(input,num) {
+        if (input) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                console.log( "XXXXXXXX", e)
+                $(`#preview${num}`).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input);
+            let type = input.type.split("/")[1];
+            $("#sType1").val( type )
+
+            $("#sContentType1").val( input.type )
+
+
+            let fileName = input.name;
+            let extension = fileName.split('.').pop();
+            $("#sType1").val( extension )
+            console.log('File extension:', extension);
+
+            
+        }
+    }
+
+    function cancelImage( num ) {
+        $(`#sImage${num}`).val(null);
+        $(`#preview${num}`).hide();
+        $(`#preview${num}`).attr("src",null);
+    }
+
+    function uploadImage( num ){
+        let imgs =  $(`#image${num}`)
+        $(`#preview${num}`).hide();
+        readURL( imgs[0].files[0],num );
+
+        if( (imgs[0].files[0].size/1024) > 10000 )
+        {
+            $(`.image1${num}`).html('Document  must be 10MB maximum.');
+        }
+        else{
+            $(`.image1${num}`).text("");
+            $(`.loading${num}`).show();
+            $(':input[type="submit"]').prop('disabled', true);
+        }
+        
+        $.ajax({
+            type: 'GET',
+            url: '/documents/uploadImage',
+            data: {
+                location: 'documents/',
+                count: 1,
+                type: $("#sType1").val()
+            },
+            success: function (imageData) {
+                console.log({
+                    imageData
+                })
+                let image = $(`#image${num}`).get()[0].files[0];
+                let url = imageData.data[0].url.replace("http:", "https:")
+                $.ajax({
+                    type: 'PUT',
+                    url,
+                    contentType: $("#sContentType1").val(),
+                    processData: false,
+                    data: image,
+                    success: function(res) {
+                        let index = imageData.data[0].preview.lastIndexOf('/');
+                        let result = imageData.data[0].preview.substring(index + 1);
+                        result = `documents/${result}`;
+
+                        $(`#sImage${num}`).val(result);
+                        $(`.loading${num}`).hide();
+
+                        $(`#preview${num}`).html(`
+                            <a href="${imageData.data[0].preview}" target="_blank" >View</a>
+                        `)
+                        $(`#preview${num}`).show();
+                        $(`#title`).val(result)
+
+                        //$(`#preview${num}`).show(); // Display image element
+                        //$(`.preview${num}`).show(); // Display image element
+
+                        $(':input[type="submit"]').prop('disabled', false);
+                    },
+                    error: function(error) {
+                        console.log( "errrr=====>", error);
+                    }
+                });
+            }
+        });
+    }
+</script>

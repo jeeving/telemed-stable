@@ -1,0 +1,84 @@
+<% layout('./layouts/list') -%>
+
+    <!-- blog-section-start -->
+    <section class="blog-sec blog-detail-page">
+        <div class="element"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="blog-detail-slider owl-carousel" id="blog_details">
+                        <li class="item">
+                            <figure>
+                                <div class="blog-detail-img-blog">
+                                    <img src="/img/blog-detail.png" alt="">
+                                    
+                                    <!-- <img src="<%= s3Base %><%= blog.image1 %>" alt=""> -->
+                                </div>
+                            </figure>
+                            
+                        </li>
+                        
+                        
+                        <% if(blog.image2){ %>
+                            <li class="item">
+                                <figure>
+                                    <div class="blog-detail-img-blog">
+                                        <img src="<%= s3Base %><%= blog.image2 %>" alt="">
+                                    </div>
+                                </figure>
+                                <!-- <div class="blog-detail-top-info">
+                                    <div class="blog-detail-top-box">
+                                        <h3>
+                                            <%= blog.title %>
+                                        </h3>
+                                        <span>
+                                            
+                                            <%= moment.unix(blog.added).format("DD MMMM,YYYY - hh:mm A")  %>
+                                        </span>
+                                    </div>
+                                    <%- blog.description %>
+                                </div> -->
+                            </li>
+                        <% } %>
+
+                        <% if(embedLink){ %>
+                        <li class="item">
+                            <!-- <video controls> -->
+                                <iframe width="930" height="513" src="https://www.youtube.com/embed/<%= embedLink %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                
+                                <!-- Your browser does not support the video tag. -->
+                            <!-- </video> -->
+                            <!-- <div class="blog-detail-top-info">
+                                <div class="blog-detail-top-box">
+                                    <h3>
+                                        Full-Fledged Healthcare Ecosystem
+                                    </h3>
+                                    <span>
+                                        1 january,2021 - 9:30 P.M
+                                    </span>
+                                </div>
+                                <%- blog.description %>
+                            </div> -->
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+            <div class="blog-detail-top-info">
+                <div class="blog-detail-top-box">
+                    <h3>
+                        <%= blog.title %>
+                    </h3>
+                    <span>
+                        
+                        <%= moment.unix(blog.added).format("DD MMMM,YYYY - hh:mm A")  %>
+                    </span>
+                </div>
+                <%- blog.description %>
+            </div>
+
+        </div>
+        </div>
+        </div>
+    </section>
+    <!-- blog-section-end -->

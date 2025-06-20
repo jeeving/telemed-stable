@@ -1,0 +1,119 @@
+<% layout('../layouts/webinar') -%>
+<script>
+  var diffTimeToEnd = "<%= diffTimeToEnd %>"
+  diffTimeToEnd = parseInt(diffTimeToEnd);
+</script>
+
+  <div class="content">
+
+    <!-- Start Content-->
+    <div class="container-fluid">
+
+      <!-- start page title -->
+      <div class="row">
+        <h1 id="titleHeading">Video Conference</h1>
+        <!-- <form> 
+          <label for="username" style="display: none;">Name: </label>
+          <input type="text" name="username" id="username" style="display: none;">
+          <button id="join_leave">Join call</button>
+          <button id="share_screen" type="button" disabled>Share screen</button>
+          <button id="toggle_chat" type="button" disabled style="display: none;">Toggle chat</button>
+        </form> -->
+        <!-- <p id="count">Disconnected.</p> -->
+      </div>
+      <!-- end page title -->
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box">
+            <div class="row">
+              <div class="col-12">
+                <!-- <div id="root">
+                  <div id="container" class="container">
+                    <div id="localShare" style="display: none;"></div>
+                    <div id="local" class="participant">
+                      <div>
+                        <div class="label" id="meLabel">Me</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row container" id="otherContainer"></div>
+                </div> -->
+
+                <div id="root" class="row root">
+                  <div class="col-lg-10 col-12">
+                    <div class="tab-pane active" id="container">
+                      <div id="localShare" style="display: none;">
+                        <div id="ls2"></div>
+
+                        <div class="position-relative h-100">
+                          <div class="d-flex justify-content-center position-absolute start-0 end-0 bottom-0 mx-auto translateY20">
+                            <button id="share_screen2" type="button" class="btn btn-primary btn-share mr-3">Stop Sharing</button>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      
+
+                      <div id="local" class="localParticipant">
+                        <div class="position-relative h-100">
+                          <div class="label d-flex justify-content-center position-absolute start-0 end-0 top-0 mx-auto mt-3" id="meLabel"></div>
+                          <div class="d-flex justify-content-center position-absolute start-0 end-0 bottom-0 mx-auto translateY20" id="isCamera">
+                            <button id="join_leave" class="btn btn-primary btn-join mr-3">Join call</button>
+                            <button id="share_screen" type="button" disabled class="btn btn-primary btn-share mr-3">Share screen</button>
+
+                            <button id="onOffVideo" class="btn btn-primary btn-join mr-3"><i class="fe-camera"></i></button>
+                            <button id="onOffAudio" class="btn btn-primary btn-join mr-3"><i class="fe-mic"></i></button>
+
+                            <a href="javascript:void(0);" id="count" class="btn btn-dark btn-disconnet">Disconnected.</a>
+
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <img src="/products/product-9.jpeg" alt="" style="width:500px" class="img-fluid mx-auto d-block rounded"> -->
+                    </div>
+                    
+                  </div>
+
+                  <div class="col-lg-2 col-12">
+                    <ul class="nav flex-column overflow-auto" id="otherContainer">
+                      
+                    </ul>
+
+                    <!-- <ul class="nav nav-pills nav-justified otherContainer" id="otherContainer">
+                      
+                      
+                    </ul> -->
+                  </div>
+
+                </div>
+              </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div> <!-- end card-->
+        </div> <!-- end col-->
+      </div>
+      <!-- end row-->
+
+
+<% if( !isOrganization ){ %>
+<!-- AddToAny BEGIN -->
+<div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-url="<%= share %>" data-a2a-title="<%= shareText %>">
+  <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+  <a class="a2a_button_facebook"></a>
+  <a class="a2a_button_twitter"></a>
+  <a class="a2a_button_email"></a>
+  <a class="a2a_button_copy_link"></a>
+</div>
+<script async src="https://static.addtoany.com/menu/page.js"></script>
+<!-- AddToAny END -->
+<% } %>
+  
+    </div> <!-- container -->
+
+
+
+  </div>
+

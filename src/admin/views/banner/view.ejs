@@ -1,0 +1,130 @@
+﻿﻿<% layout('../layouts/admin') -%>
+<div class="row ">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">Dashboard</li>
+                    <li class="breadcrumb-item"><a href="/cme">CME(Webinar)</a></li>
+                    <li class="breadcrumb-item active">View</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Webinar details</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Title: </label> <%= page.title || 'N/A' %>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Description: </label> <%= page.description || 'N/A' %>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Host: </label> <a href="/users/view/<%= page.userId._id %>" target="_blank" ><%= page.userId.fullName || 'N/A' %></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Date: </label> <%= moment.unix(page.timeStart).format("YYYY-MM-DD HH:mm")   || 'N/A' %>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Price: </label> Rs.<%= page.totalPayable || 'N/A' %> ( Rs.<%= page.amount || 'N/A' %> + Rs.<%= page.gst || 'N/A' %> GST )
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Presenter: </label> <a href="/users/view/<%= presenter.userId._id %>" target="_blank" ><%= presenter.userId.fullName || 'N/A' %></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Partner: </label> <%= page.cmePartner || 'N/A' %>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Members: </label> 
+                            <% members.forEach((x)=>{ 
+                                %>
+                                <a href="/users/view/<%= x.userId._id %>" target="_blank" > <%= x.userId.fullName %>  </a> &nbsp;
+                            <% 
+                                }) 
+                            %>
+                        </div>
+                    </div>
+                </div>
+
+                <% if(page.image){ %>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Sponsor image: </label> 
+                            <img style="width: 150px; height: 150px; border-radius: 50%;margin-right: 415px;"
+                            src="<%= `${s3Base}${page.image}` %>" />
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+                <div class="row">
+                    <% if(page.link){ %>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Sponsor Link: </label> 
+                            <a href="<%= `${page.link}` %>" target="_blank" ><%= `${page.link}` %></a>
+                        </div>
+                    </div>
+                    <% } %>
+
+                    <% if(page.bannerDescription){ %>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Banner description: </label> 
+                            <%= `${page.bannerDescription}` %>
+                        </div>
+                    </div>
+
+                    <% } %>
+
+                </div>
+
+                                  
+            </div>
+        </div>
+    </div>
+</div>
+

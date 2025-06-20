@@ -1,0 +1,12 @@
+{
+
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "BNG6WT6ZMU.com.sai.telemed",
+        "paths": ["/*"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+<% layout('../layouts/admin') -%>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/social_links">Social Links</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript: void(0);">View</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">View</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Name: </label> <%= link.socialName %>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Social Icon: </label> <img src="<%= prviewUrl%><%= link.socialIcon ? link.socialIcon : '' %>" width="80" height="80" />
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
+                            <label>Url : </label> <a href="javascript:void(0)" onclick="window.open('<%= link.linkUrl %>'); return false;"><%= link.linkUrl ? link.linkUrl : 'NA' %></a>  
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Created at: </label> <%= showDateTimeZone(link.created) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.socialLinksManager').addClass('active');
+    });
+</script>

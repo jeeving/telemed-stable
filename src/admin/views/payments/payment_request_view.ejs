@@ -1,0 +1,118 @@
+<% layout('../layouts/admin') -%>
+<div class="row ">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-left">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">Dashboard</li>
+                    <li class="breadcrumb-item"><a href="/payments/payment-request">Payments Request</a></li>
+                    <li class="breadcrumb-item active">View</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Payments Request details</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Consultant Details</h4>
+                    </div>
+                    
+                
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label> Fullname: </label> <%= request.user.fullName || 'N/A' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Email: </label> <%= request.user.email || 'N/A' %>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Amount: </label> &#x20B9;<%= request.amount || 'N/A' %>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12">
+                        <h4>Payment Details</h4>
+                    </div>
+                    <% if(request.bank_details){ %>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Account Number: </label> <%= request.bank_details.account_number || 'N/A' %>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Iban:</label> <%= request.bank_details.iban || 'N/A' %>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Bank Name: </label> <%= request.bank_details.bankName || 'N/A' %>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Account Type:</label> <%= request.bank_details.accountType || 'N/A' %>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Address:</label> <%= request.bank_details.address || 'N/A' %>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Routing Number:</label> <%= request.bank_details.routingNumber || 'N/A' %>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>BIC/Swift: </label> <%= request.bank_details.code || 'N/A' %>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Country: </label> <%= request.bank_details.country || 'N/A' %>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>Account Name: </label> <%= request.bank_details.accountName || 'N/A' %>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>IFSC: </label> <%= request.bank_details.ifsc || 'N/A' %>
+                            </div>
+                        </div>
+                    <% } %>
+                    
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Status: </label> <%- request.status=="REJECT" ? '<span class="badge label-table badge-danger">Reject</span>' : (request.status=="PENDING") ? '<span class="badge label-table badge-info">Pending</span>':'<span class="badge label-table badge-success">APPROVED</span>' %>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label>Action Date: </label> <%= request.action_date%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
